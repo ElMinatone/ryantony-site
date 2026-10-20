@@ -1,180 +1,123 @@
-.about {
+.about__top {
   display: grid;
-  grid-template-columns: 1.12fr 0.78fr;
-  gap: clamp(36px, 5vw, 76px);
+  grid-template-columns: 1.18fr 0.82fr;
+  gap: clamp(40px, 6vw, 88px);
   align-items: start;
 }
 
-.about__content .section-head {
-  margin-bottom: 34px;
+.about__intro .section-head {
+  margin-bottom: 0;
 }
 
 .about__lead-second {
   margin-top: 16px;
 }
 
-.about__values {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
+/* ---------- Direct line panel ---------- */
+.about__direct {
+  position: relative;
+  padding: 20px;
+  border: 1px solid var(--line);
+  background:
+    radial-gradient(ellipse 70% 45% at 50% 0%, rgba(192, 255, 107, 0.09), transparent 70%),
+    #050505;
 }
 
-.about__value {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  padding: 18px;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.02);
-  transition: border-color 0.3s ease, background 0.3s ease;
-}
-
-.about__value:hover {
-  border-color: var(--green-line);
-  background: rgba(192, 255, 107, 0.03);
-}
-
-.about__value-icon {
-  display: grid;
-  place-items: center;
-  width: 36px;
-  height: 36px;
-  flex: none;
-  border: 1px solid var(--green-line);
-  border-radius: 9px;
-  background: var(--green-soft);
-  color: var(--green);
-}
-
-.about__value h3 {
-  font-size: 0.95rem;
-}
-
-.about__value p {
-  margin-top: 5px;
-  color: var(--muted);
-  font-size: 0.79rem;
-  line-height: 1.6;
-}
-
-.about__signature {
+.about__direct-top {
   display: flex;
   align-items: center;
-  gap: 18px;
-  margin-top: 34px;
-  padding-top: 26px;
-  border-top: 1px solid var(--border);
-}
-
-.about__signature-mark {
-  width: 10px;
-  height: 10px;
-  flex: none;
-  background: var(--green);
-  box-shadow:
-    15px 0 0 rgba(192, 255, 107, 0.45),
-    0 15px 0 rgba(255, 255, 255, 0.24),
-    15px 15px 0 rgba(101, 101, 101, 0.6);
-}
-
-.about__signature div {
-  display: grid;
-  gap: 5px;
-}
-
-.about__signature strong {
-  font-family: var(--font-display);
-  font-size: 0.74rem;
-  font-weight: 600;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--line-soft);
+  color: var(--muted-2);
+  font-family: var(--font-mono);
+  font-size: 0.56rem;
   letter-spacing: 0.18em;
 }
 
-.about__signature span {
-  color: var(--muted-2);
-  font-family: var(--font-mono);
-  font-size: 0.6rem;
-  letter-spacing: 0.16em;
-}
-
-/* ---------- Contact card ---------- */
-.about__contact {
-  position: sticky;
-  top: calc(var(--header-h) + 40px);
-  padding: 30px;
-  text-align: center;
-  background:
-    radial-gradient(ellipse 90% 55% at 50% 0%, rgba(192, 255, 107, 0.11), transparent 70%),
-    linear-gradient(170deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.012));
-}
-
-.about__contact-bg {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  pointer-events: none;
-  border-radius: inherit;
-}
-
-.about__contact-bg img {
-  position: absolute;
-  top: -36px;
-  right: -44px;
-  width: 220px;
-  height: auto;
-  opacity: 0.07;
-}
-
-.about__avatar {
+.about__direct-stage {
+  position: relative;
   display: grid;
   place-items: center;
-  width: 68px;
-  height: 68px;
-  margin: 0 auto 18px;
-  border: 1px solid var(--green-line);
-  border-radius: 50%;
-  background: rgba(192, 255, 107, 0.12);
-  box-shadow: 0 0 40px rgba(192, 255, 107, 0.14);
-  color: var(--green);
-  font-family: var(--font-display);
-  font-size: 1.3rem;
-  font-weight: 700;
-  letter-spacing: 0.02em;
+  height: 196px;
+  margin: 18px 0;
+  overflow: hidden;
 }
 
-.about__contact h3 {
-  font-size: 1.35rem;
+.about__direct-stage img {
+  position: relative;
+  z-index: 1;
+  width: 124px;
+  height: auto;
+  filter: drop-shadow(0 0 32px rgba(192, 255, 107, 0.28));
+}
+
+.about__direct-orbit {
+  position: absolute;
+  width: 176px;
+  height: 176px;
+  border: 1px dashed rgba(192, 255, 107, 0.2);
+  border-radius: 50%;
+  animation: spin 52s linear infinite;
+}
+
+.about__direct-cross {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-color: var(--green);
+  opacity: 0.7;
+}
+
+.about__direct-cross--tl {
+  top: 4px;
+  left: 4px;
+  border-top: 1px solid;
+  border-left: 1px solid;
+}
+
+.about__direct-cross--br {
+  right: 4px;
+  bottom: 4px;
+  border-right: 1px solid;
+  border-bottom: 1px solid;
+}
+
+.about__direct-info {
+  display: grid;
+  gap: 4px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line-soft);
+}
+
+.about__direct-info h3 {
+  margin-top: 4px;
+  font-size: 1.4rem;
+  font-weight: 500;
 }
 
 .about__role {
-  margin-top: 6px;
   color: var(--green);
   font-family: var(--font-mono);
-  font-size: 0.68rem;
-  letter-spacing: 0.04em;
-}
-
-.about__contact-text {
-  margin-top: 18px;
-  color: var(--muted);
-  font-size: 0.86rem;
-  line-height: 1.72;
+  font-size: 0.6rem;
+  letter-spacing: 0.06em;
 }
 
 .about__phone {
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: 9px;
-  margin-top: 20px;
-  padding: 13px;
-  border: 1px solid var(--border-strong);
-  border-radius: 10px;
+  margin-top: 16px;
+  padding: 13px 14px;
+  border: 1px solid var(--line);
   color: var(--text);
   font-family: var(--font-mono);
-  font-size: 1rem;
-  letter-spacing: 0.03em;
-  transition: border-color 0.25s ease, color 0.25s ease, background 0.25s ease;
+  font-size: 0.94rem;
+  transition:
+    border-color 0.25s ease,
+    color 0.25s ease,
+    background 0.25s ease;
 }
 
 .about__phone:hover {
@@ -183,48 +126,160 @@
   color: var(--green);
 }
 
-.about__contact .btn {
-  margin-top: 12px;
-}
-
-.about__contact-list {
-  display: grid;
-  gap: 9px;
-  margin-top: 22px;
-  padding-top: 20px;
-  border-top: 1px solid var(--border);
-  text-align: left;
-}
-
-.about__contact-list li {
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
-  color: var(--muted);
-  font-size: 0.78rem;
-  line-height: 1.55;
-}
-
-.about__contact-list app-icon {
-  margin-top: 3px;
+.about__phone-arrow {
+  margin-left: auto;
   color: var(--green);
 }
 
-@media (max-width: 1024px) {
-  .about {
+.about__direct .btn {
+  margin-top: 8px;
+}
+
+.about__direct-note {
+  margin-top: 12px;
+  color: var(--muted-2);
+  font-family: var(--font-mono);
+  font-size: 0.56rem;
+  letter-spacing: 0.03em;
+  line-height: 1.6;
+  text-align: center;
+}
+
+/* ---------- Principles ---------- */
+.about__values {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-top: clamp(52px, 6vw, 84px);
+  border-top: 1px solid var(--line-soft);
+}
+
+.about__value {
+  display: grid;
+  align-content: start;
+  padding: 26px 26px 30px 0;
+  border-right: 1px solid var(--line-soft);
+}
+
+.about__value + .about__value {
+  padding-left: 26px;
+}
+
+.about__value:last-child {
+  border-right: 0;
+}
+
+.about__value-index {
+  color: var(--muted-2);
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.16em;
+}
+
+.about__value-icon {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  margin-top: 22px;
+  border: 1px solid var(--green-line);
+  color: var(--green);
+}
+
+.about__value h3 {
+  margin-top: 18px;
+  font-size: 1.02rem;
+  font-weight: 500;
+}
+
+.about__value p {
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 0.79rem;
+  line-height: 1.65;
+}
+
+/* ---------- Signature strip ---------- */
+.about__signature {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 46px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line-soft);
+}
+
+.about__signature-mark {
+  width: 8px;
+  height: 8px;
+  flex: none;
+  background: var(--green);
+  box-shadow:
+    12px 0 0 rgba(192, 255, 107, 0.42),
+    0 12px 0 rgba(255, 255, 255, 0.22),
+    12px 12px 0 rgba(101, 101, 101, 0.6);
+}
+
+.about__signature strong {
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+}
+
+.about__signature-meta {
+  color: var(--muted-2);
+  font-family: var(--font-mono);
+  font-size: 0.56rem;
+  letter-spacing: 0.16em;
+}
+
+.about__signature-meta:first-of-type {
+  margin-left: auto;
+}
+
+@media (max-width: 1080px) {
+  .about__top {
     grid-template-columns: 1fr;
   }
-  .about__contact {
-    position: static;
+  .about__direct {
     max-width: 460px;
+  }
+  .about__values {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .about__value:nth-child(2n) {
+    border-right: 0;
+  }
+  .about__value:nth-child(-n + 2) {
+    border-bottom: 1px solid var(--line-soft);
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 620px) {
   .about__values {
     grid-template-columns: 1fr;
   }
-  .about__contact {
-    padding: 26px;
+  .about__value,
+  .about__value + .about__value {
+    padding: 22px 0;
+    border-right: 0;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .about__value:last-child {
+    border-bottom: 0;
+  }
+  .about__direct {
+    max-width: 100%;
+  }
+  .about__signature {
+    flex-wrap: wrap;
+  }
+  .about__signature-meta:first-of-type {
+    margin-left: 0;
+    flex-basis: 100%;
+    padding-left: 28px;
+  }
+  .about__signature-meta:last-child {
+    display: none;
   }
 }

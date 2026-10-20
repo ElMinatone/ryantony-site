@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { BackgroundComponent } from './components/background';
 import { HeaderComponent } from './components/header/header';
 import { HeroComponent } from './components/hero/hero';
+import { ManifestoComponent } from './components/manifesto/manifesto';
 import { HighlightsComponent } from './components/highlights';
 import { ServicesComponent } from './components/services/services';
 import { SolutionsComponent } from './components/solutions/solutions';
@@ -21,6 +22,7 @@ import { QuoteModalComponent } from './components/quote-modal/quote-modal';
     BackgroundComponent,
     HeaderComponent,
     HeroComponent,
+    ManifestoComponent,
     HighlightsComponent,
     ServicesComponent,
     SolutionsComponent,

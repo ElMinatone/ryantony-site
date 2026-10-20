@@ -1,6 +1,6 @@
 <section class="section section-line" id="projetos">
   <div class="container">
-    <div class="projects__head">
+    <div class="showcase__head">
       <header class="section-head" appReveal>
         <span class="eyebrow"><span class="dot"></span>Aplicações</span>
         <h2 class="section-title">
@@ -14,19 +14,31 @@
         </p>
       </header>
 
-      <aside class="projects__disclaimer card" appReveal="120">
-        <app-icon name="spark" [size]="18" />
+      <aside class="showcase__disclaimer" appReveal="120">
+        <span class="index">/ NOTA</span>
         <p>
-          <strong>Exemplos de aplicação.</strong> São cenários ilustrativos, não cases de clientes.
-          O seu projeto será desenhado do zero, com escopo e identidade próprios.
+          São cenários ilustrativos, não cases de clientes. O seu projeto será desenhado do zero, com
+          escopo e identidade próprios.
         </p>
       </aside>
     </div>
 
-    <div class="projects">
-      @for (project of projects; track project.title; let i = $index) {
-        <article class="project card" appReveal [appReveal]="(i % 2) * 100">
-          <div [class]="'project__visual project__visual--' + project.visual">
+    @let project = projects[active()];
+
+    <div class="showcase">
+      <div class="showcase__preview" appReveal>
+        <div class="preview">
+          <div class="preview__bar">
+            <span class="preview__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span class="preview__file">preview / {{ project.file }}.ryantony</span>
+            <span class="preview__live"><i></i> interface preview</span>
+          </div>
+
+          <div class="preview__stage">
+            <span class="preview__pattern" aria-hidden="true"></span>
+            <span class="preview__cross preview__cross--1" aria-hidden="true"></span>
+            <span class="preview__cross preview__cross--2" aria-hidden="true"></span>
+
             @switch (project.visual) {
               @case ('dashboard') {
                 <div class="mock mock-dash" aria-hidden="true">
@@ -103,34 +115,58 @@
             }
           </div>
 
-          <div class="project__content">
-            <div class="project__tags">
-              @for (tag of project.tags; track tag) {
-                <span class="tag tag--green">{{ tag }}</span>
-              }
-            </div>
-            <h3>{{ project.title }}</h3>
-            <p class="project__description">{{ project.description }}</p>
-            <div class="project__outcome">
-              <span>Resultado esperado</span>
-              {{ project.outcome }}
-            </div>
+          <div class="preview__foot">
+            <span class="index">/ EXEMPLO DE APLICAÇÃO</span>
+            <span class="preview__count">{{ active() + 1 < 10 ? '0' + (active() + 1) : active() + 1 }} / 04</span>
           </div>
-        </article>
-      }
+        </div>
+      </div>
+
+      <div class="showcase__list" appReveal="100" aria-label="Exemplos de aplicação">
+        @for (item of projects; track item.title; let i = $index) {
+          <button
+            class="showcase__item"
+            type="button"
+            [class.is-active]="active() === i"
+            [attr.aria-pressed]="active() === i"
+            (mouseenter)="setActive(i)"
+            (focus)="setActive(i)"
+            (click)="setActive(i)"
+          >
+            <span class="showcase__index">{{ '0' + (i + 1) }}</span>
+            <span class="showcase__item-head">
+              <strong>{{ item.title }}</strong>
+              <span class="showcase__tags">
+                @for (tag of item.tags; track tag) {
+                  <span class="tag">{{ tag }}</span>
+                }
+              </span>
+            </span>
+            <span class="showcase__chevron"><app-icon name="arrow-up-right" [size]="16" /></span>
+
+            <span class="showcase__detail">
+              <span class="showcase__detail-inner">
+                <span class="showcase__desc">{{ item.description }}</span>
+                <span class="showcase__outcome">
+                  <em>Resultado esperado</em>
+                  {{ item.outcome }}
+                </span>
+              </span>
+            </span>
+          </button>
+        }
+      </div>
     </div>
 
-    <div class="projects__cta card" appReveal>
+    <div class="showcase__cta" appReveal>
       <div>
-        <h3>Tem um cenário parecido com algum destes?</h3>
-        <p>
-          Traga o seu desafio. Em uma conversa, entendemos o contexto e desenhamos uma proposta
-          técnica sob medida — sem compromisso.
-        </p>
+        <span class="index">/ PRÓXIMO PROJETO</span>
+        <h3>O seu cenário pode ser o próximo.</h3>
+        <p>Traga o desafio. Em uma conversa, entendemos o contexto e desenhamos uma proposta técnica sob medida.</p>
       </div>
       <button class="btn btn-primary" type="button" (click)="openQuote()">
-        <app-icon name="spark" [size]="17" />
         Fazer um orçamento
+        <app-icon name="arrow-up-right" [size]="16" />
       </button>
     </div>
   </div>

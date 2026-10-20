@@ -5,42 +5,55 @@
       <div class="cta__pattern" aria-hidden="true"></div>
       <span class="cta__watermark" aria-hidden="true">RYANTONY</span>
 
-      <span class="eyebrow"><span class="dot"></span>Próximo passo</span>
-
-      <h2 class="cta__title">
-        Sua ideia merece
-        <span class="text-green">sair do papel</span>.
-      </h2>
-
-      <p class="cta__lead">
-        Conte o que você quer construir. Em uma conversa direta, entendemos o contexto, alinhamos o
-        escopo e mostramos o caminho técnico para transformar a ideia em um produto digital
-        funcionando.
-      </p>
-
-      <div class="cta__actions">
-        <button class="btn btn-primary" type="button" (click)="openQuote()">
-          <app-icon name="spark" [size]="18" />
-          Faça um orçamento
-        </button>
-        <a class="btn btn-ghost" [href]="site.phoneHref">
-          <app-icon name="phone" [size]="17" />
-          {{ site.phoneDisplay }}
-        </a>
+      <div class="cta__top">
+        <span>/ PRÓXIMO PASSO</span>
+        <span>CONTATO — 2026</span>
       </div>
 
-      <div class="cta__contact">
-        <span class="cta__contact-label">Atendimento direto com</span>
-        <strong>{{ site.contactName }}</strong>
-        <span class="cta__dot" aria-hidden="true"></span>
-        <span class="cta__contact-label">Resposta inicial em até 24h</span>
+      <div class="cta__body">
+        <div class="cta__main">
+          <span class="cta__kicker">Sua ideia merece</span>
+          <h2 class="cta__title">
+            sair do papel<span class="cta__dot">.</span>
+          </h2>
+          <p class="cta__lead">
+            Conte o que você quer construir. Em uma conversa direta, entendemos o contexto, alinhamos
+            o escopo e mostramos o caminho técnico para transformar a ideia em um produto digital
+            funcionando.
+          </p>
+
+          <div class="cta__actions">
+            <button class="btn btn-primary" type="button" (click)="openQuote()">
+              Fazer um orçamento
+              <app-icon name="arrow-up-right" [size]="17" />
+            </button>
+            <a class="btn btn-ghost" [href]="site.phoneHref">
+              <app-icon name="phone" [size]="16" />
+              Ligar agora
+            </a>
+          </div>
+        </div>
+
+        <aside class="cta__direct">
+          <span class="index">FALE DIRETO COM</span>
+          <h3>{{ site.contactName }}</h3>
+          <a class="cta__phone" [href]="site.phoneHref">{{ site.phoneDisplay }}</a>
+          <span class="cta__status"><i></i> Atendimento remoto · retorno em até 24h</span>
+
+          <ul class="cta__notes">
+            <li><app-icon name="check" [size]="13" /> Orçamento sem compromisso</li>
+            <li><app-icon name="check" [size]="13" /> Escopo claro antes de começar</li>
+            <li><app-icon name="check" [size]="13" /> Acompanhamento direto do início ao pós-deploy</li>
+          </ul>
+        </aside>
       </div>
 
-      <ul class="cta__notes">
-        <li><app-icon name="check" [size]="14" /> Orçamento sem compromisso</li>
-        <li><app-icon name="check" [size]="14" /> Escopo claro antes de começar</li>
-        <li><app-icon name="check" [size]="14" /> Atendimento remoto e direto</li>
-      </ul>
+      <div class="cta__bottom">
+        <span>ORÇAMENTO SEM COMPROMISSO</span>
+        <span>ATENDIMENTO REMOTO</span>
+        <span>ESCOPO CLARO</span>
+        <span class="cta__bottom-mark">{{ site.signature }}</span>
+      </div>
     </div>
   </div>
 </section>

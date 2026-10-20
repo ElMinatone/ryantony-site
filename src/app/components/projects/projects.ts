@@ -1,10 +1,11 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { IconComponent } from '../../shared/icon';
 import { RevealDirective } from '../../shared/reveal.directive';
 import { QuoteService } from '../../core/quote.service';
 
 interface Project {
   visual: 'dashboard' | 'shop' | 'portal' | 'automation';
+  file: string;
   tags: string[];
   title: string;
   description: string;
@@ -21,9 +22,12 @@ interface Project {
 export class ProjectsComponent {
   private readonly quote = inject(QuoteService);
 
+  protected readonly active = signal(0);
+
   protected readonly projects: readonly Project[] = [
     {
       visual: 'dashboard',
+      file: 'painel-gestao',
       tags: ['Sistema web', 'Fullstack'],
       title: 'Painel de gestão operacional',
       description:
@@ -32,6 +36,7 @@ export class ProjectsComponent {
     },
     {
       visual: 'shop',
+      file: 'loja-online',
       tags: ['E-commerce', 'Integrações'],
       title: 'Loja online e catálogo integrado',
       description:
@@ -40,6 +45,7 @@ export class ProjectsComponent {
     },
     {
       visual: 'portal',
+      file: 'portal-cliente',
       tags: ['Portal', 'Autoatendimento'],
       title: 'Portal do cliente',
       description:
@@ -48,6 +54,7 @@ export class ProjectsComponent {
     },
     {
       visual: 'automation',
+      file: 'rotinas-automaticas',
       tags: ['Automação', 'Dados'],
       title: 'Rotinas e relatórios automáticos',
       description:
@@ -55,6 +62,10 @@ export class ProjectsComponent {
       outcome: 'Horas de trabalho manual viram processos confiáveis.',
     },
   ];
+
+  protected setActive(index: number): void {
+    this.active.set(index);
+  }
 
   protected openQuote(): void {
     this.quote.open();

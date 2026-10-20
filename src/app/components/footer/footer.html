@@ -42,15 +42,25 @@
         <span class="footer__contact-label">Atendimento direto</span>
         <strong class="footer__contact-name">{{ site.contactName }}</strong>
         <a class="footer__phone" [href]="site.phoneHref">
-          <app-icon name="phone" [size]="16" />
+          <app-icon name="phone" [size]="15" />
           {{ site.phoneDisplay }}
         </a>
         <p>Projetos remotos, com reuniões online e comunicação direta.</p>
         <button class="btn btn-primary btn-sm" type="button" (click)="openQuote()">
-          <app-icon name="spark" [size]="15" />
-          Faça um orçamento
+          Fazer um orçamento
+          <app-icon name="arrow-up-right" [size]="14" />
         </button>
       </div>
+    </div>
+
+    <div class="footer__wordmark" aria-hidden="true">
+      <img
+        src="images/ryantony-logo-dark.png"
+        alt=""
+        width="1300"
+        height="286"
+        loading="lazy"
+      />
     </div>
 
     <div class="footer__bottom">

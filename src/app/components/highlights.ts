@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { RevealDirective } from '../../shared/reveal.directive';
+import { RevealDirective } from '../shared/reveal.directive';
 
 interface Highlight {
   value: string;
