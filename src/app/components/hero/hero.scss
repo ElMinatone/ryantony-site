@@ -178,14 +178,23 @@
   border-right: 1px solid;
 }
 
-.specimen__top,
-.specimen__bottom {
+.specimen__top {
   position: relative;
   z-index: 2;
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   gap: 12px;
+}
+
+.specimen__bottom {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+  padding-right: 26px;
 }
 
 .specimen__label {
@@ -202,12 +211,17 @@
 }
 
 .specimen__side {
+  position: absolute;
+  top: 50%;
+  right: 8px;
   color: var(--muted-2);
   font-family: var(--font-mono);
   font-size: 0.5rem;
   letter-spacing: 0.22em;
   writing-mode: vertical-rl;
-  transform: rotate(180deg);
+  transform: translateY(-50%) rotate(180deg);
+  white-space: nowrap;
+  pointer-events: none;
 }
 
 .specimen__stage {
