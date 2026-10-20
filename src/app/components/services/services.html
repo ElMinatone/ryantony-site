@@ -21,8 +21,8 @@
     </div>
 
     <div class="capabilities">
-      @for (service of services; track service.number) {
-        <article class="capability" appReveal>
+      @for (service of services; track service.number; let i = $index) {
+        <article class="capability" appReveal [appReveal]="i * 80">
           <span class="capability__index">{{ service.number }}</span>
 
           <div class="capability__head">

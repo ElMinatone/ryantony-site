@@ -16,11 +16,11 @@
       </p>
     </div>
 
-    <div class="pipeline" appReveal>
+    <div class="pipeline">
       <span class="pipeline__line" aria-hidden="true"></span>
 
-      @for (step of steps; track step.number) {
-        <article class="pipeline__step">
+      @for (step of steps; track step.number; let i = $index) {
+        <article class="pipeline__step" appReveal [appReveal]="i * 90">
           <span class="pipeline__node" aria-hidden="true"></span>
           <div class="pipeline__meta">
             <span class="index">{{ step.number }}</span>
@@ -36,22 +36,22 @@
       }
     </div>
 
-    <div class="process__notes" appReveal>
-      <div class="process__note">
+    <div class="process__notes">
+      <div class="process__note" appReveal>
         <app-icon name="users" [size]="17" />
         <div>
           <strong>Comunicação direta</strong>
           <span>Você fala com quem desenvolve, sem camadas de intermediários.</span>
         </div>
       </div>
-      <div class="process__note">
+      <div class="process__note" appReveal="80">
         <app-icon name="calendar" [size]="17" />
         <div>
           <strong>Etapas documentadas</strong>
           <span>Escopo, aprovações e entregas registrados ao longo do projeto.</span>
         </div>
       </div>
-      <div class="process__note">
+      <div class="process__note" appReveal="160">
         <app-icon name="shield" [size]="17" />
         <div>
           <strong>Sem surpresas</strong>

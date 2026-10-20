@@ -1,5 +1,7 @@
 import { AfterViewInit, Directive, ElementRef, Input, OnDestroy, inject } from '@angular/core';
 
+type RevealKind = 'up' | 'mask' | 'left' | 'right' | 'scale' | 'fade';
+
 @Directive({
   selector: '[appReveal]',
 })
@@ -8,16 +10,22 @@ export class RevealDirective implements AfterViewInit, OnDestroy {
   private observer?: IntersectionObserver;
 
   @Input() appReveal: string | number = '';
+  @Input() appRevealKind: RevealKind = 'up';
 
   ngAfterViewInit(): void {
     const host = this.element.nativeElement;
     const delay = Number(this.appReveal) || 0;
 
+    host.dataset['reveal'] = this.appRevealKind;
+
     if (delay > 0) {
       host.style.transitionDelay = `${delay}ms`;
     }
 
-    if (typeof IntersectionObserver === 'undefined') {
+    if (
+      typeof IntersectionObserver === 'undefined' ||
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    ) {
       host.classList.add('is-visible');
       return;
     }
@@ -31,7 +39,7 @@ export class RevealDirective implements AfterViewInit, OnDestroy {
           }
         }
       },
-      { threshold: 0.12, rootMargin: '0px 0px -64px 0px' },
+      { threshold: 0.01, rootMargin: '0px 0px -6% 0px' },
     );
 
     this.observer.observe(host);

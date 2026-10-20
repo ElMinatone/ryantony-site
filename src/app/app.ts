@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { SmoothScrollService } from './core/smooth-scroll.service';
 import { BackgroundComponent } from './components/background';
 import { HeaderComponent } from './components/header/header';
 import { HeroComponent } from './components/hero/hero';
@@ -38,4 +39,10 @@ import { QuoteModalComponent } from './components/quote-modal/quote-modal';
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
-export class App {}
+export class App implements AfterViewInit {
+  private readonly smoothScroll = inject(SmoothScrollService);
+
+  ngAfterViewInit(): void {
+    this.smoothScroll.init();
+  }
+}

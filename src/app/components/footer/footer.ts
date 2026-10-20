@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { IconComponent } from '../../shared/icon';
 import { QuoteService } from '../../core/quote.service';
+import { SmoothScrollService } from '../../core/smooth-scroll.service';
 import { NAV_LINKS, SITE } from '../../core/site-info';
 
 @Component({
@@ -12,6 +13,7 @@ import { NAV_LINKS, SITE } from '../../core/site-info';
 })
 export class FooterComponent {
   private readonly quote = inject(QuoteService);
+  private readonly smoothScroll = inject(SmoothScrollService);
 
   protected readonly site = SITE;
   protected readonly links = NAV_LINKS;
@@ -31,6 +33,6 @@ export class FooterComponent {
   }
 
   protected toTop(): void {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    this.smoothScroll.toTop();
   }
 }

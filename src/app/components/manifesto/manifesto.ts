@@ -18,9 +18,7 @@ import { RevealDirective } from '../../shared/reveal.directive';
         <div class="manifesto__body">
           <h2 class="manifesto__title" appReveal>
             Tecnologia que
-            <span class="manifesto__inline">
-              constrói<span class="manifesto__pixel" aria-hidden="true"></span>ideias
-            </span>
+            <span class="manifesto__inline">constrói ideias</span>
           </h2>
 
           <p class="manifesto__text" appReveal="120">
@@ -30,26 +28,15 @@ import { RevealDirective } from '../../shared/reveal.directive';
           </p>
         </div>
 
-        <ul class="manifesto__steps" appReveal="200">
-          @for (step of steps; track step.label) {
-            <li>
+        <ul class="manifesto__steps">
+          @for (step of steps; track step.label; let i = $index) {
+            <li appReveal [appReveal]="140 + i * 70">
               <span>{{ step.index }}</span>
               <strong>{{ step.label }}</strong>
               <em>{{ step.detail }}</em>
             </li>
           }
         </ul>
-      </div>
-
-      <div class="manifesto__ticker" aria-hidden="true">
-        <div class="manifesto__track">
-          @for (word of words; track word) {
-            <span class="manifesto__word" [class.is-outline]="$index % 2 === 1">{{ word }}</span>
-          }
-          @for (word of words; track word + '-b') {
-            <span class="manifesto__word" [class.is-outline]="$index % 2 === 1">{{ word }}</span>
-          }
-        </div>
       </div>
     </section>
   `,
@@ -62,6 +49,4 @@ export class ManifestoComponent {
     { index: '03', label: 'Código', detail: 'frontend, backend e dados' },
     { index: '04', label: 'Operação', detail: 'deploy, monitor e evolução' },
   ];
-
-  protected readonly words = ['CÓDIGO', '·', 'PROCESSOS', '·', 'RESULTADOS', '·'];
 }
