@@ -442,21 +442,6 @@ ol {
   transform: none;
 }
 
-[appReveal][data-reveal='mask'] {
-  opacity: 1;
-  transform: translate3d(0, 30px, 0);
-  filter: none;
-  clip-path: inset(0 0 100% 0);
-  transition:
-    clip-path 1.1s var(--ease),
-    transform 1.1s var(--ease);
-}
-
-[appReveal][data-reveal='mask'].is-visible {
-  transform: none;
-  clip-path: inset(-20% -10% -20% -10%);
-}
-
 /* ---------- Utilities ---------- */
 .sr-only {
   position: absolute;

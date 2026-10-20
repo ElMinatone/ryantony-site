@@ -44,10 +44,11 @@ export class SmoothScrollService implements OnDestroy {
     });
   }
 
-  scrollTo(target: string | number | Element, offset = -88): void {
+  scrollTo(target: string | number | Element, offset = -92): void {
     if (this.lenis) {
       this.lenis.start();
-      this.lenis.scrollTo(target, { offset, duration: 1.2 });
+      // O Lenis já aplica o scroll-padding-top do documento.
+      this.lenis.scrollTo(target, { offset: 0, duration: 1.2 });
       return;
     }
 

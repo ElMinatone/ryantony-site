@@ -1,6 +1,6 @@
 import { AfterViewInit, Directive, ElementRef, Input, OnDestroy, inject } from '@angular/core';
 
-type RevealKind = 'up' | 'mask' | 'left' | 'right' | 'scale' | 'fade';
+type RevealKind = 'up' | 'left' | 'right' | 'scale' | 'fade';
 
 @Directive({
   selector: '[appReveal]',
@@ -39,7 +39,7 @@ export class RevealDirective implements AfterViewInit, OnDestroy {
           }
         }
       },
-      { threshold: 0.01, rootMargin: '0px 0px -6% 0px' },
+      { threshold: 0.01 },
     );
 
     this.observer.observe(host);
