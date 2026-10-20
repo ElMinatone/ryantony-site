@@ -1,30 +1,31 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { IconComponent } from '../shared/icon';
-import { RevealDirective } from '../shared/reveal.directive';
+import { RevealDirective } from '../../shared/reveal.directive';
 
 interface Highlight {
   value: string;
   label: string;
   description: string;
-  icon: string;
 }
 
 @Component({
   selector: 'app-highlights',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [IconComponent, RevealDirective],
+  imports: [RevealDirective],
   template: `
     <section class="section section--tight">
       <div class="container">
-        <div class="highlights">
+        <div class="specs__head">
+          <span class="index">/ 01 — COMPROMISSOS</span>
+          <span class="index">04 PONTOS</span>
+        </div>
+
+        <div class="specs">
           @for (item of items; track item.label; let i = $index) {
-            <article class="highlight" appReveal [appReveal]="i * 90">
-              <span class="highlight__icon"><app-icon [name]="item.icon" [size]="20" /></span>
-              <div class="highlight__body">
-                <strong class="highlight__value">{{ item.value }}</strong>
-                <span class="highlight__label">{{ item.label }}</span>
-                <p>{{ item.description }}</p>
-              </div>
+            <article class="spec" appReveal [appReveal]="i * 70">
+              <span class="spec__index">{{ '0' + (i + 1) }}</span>
+              <strong class="spec__value">{{ item.value }}</strong>
+              <span class="spec__label">{{ item.label }}</span>
+              <p>{{ item.description }}</p>
             </article>
           }
         </div>
@@ -32,84 +33,111 @@ interface Highlight {
     </section>
   `,
   styles: `
-    .highlights {
+    .specs__head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--line-soft);
+    }
+
+    .specs {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.008));
-      overflow: hidden;
     }
 
-    .highlight {
+    .spec {
       position: relative;
-      padding: 28px 26px;
-      border-right: 1px solid var(--border);
+      padding: 30px 26px 34px 0;
+      border-right: 1px solid var(--line-soft);
     }
 
-    .highlight:last-child {
+    .spec + .spec {
+      padding-left: 26px;
+    }
+
+    .spec:last-child {
       border-right: 0;
     }
 
-    .highlight__icon {
-      display: grid;
-      place-items: center;
-      width: 42px;
-      height: 42px;
-      margin-bottom: 18px;
-      border: 1px solid var(--green-line);
-      border-radius: 11px;
-      background: var(--green-soft);
-      color: var(--green);
+    .spec__index {
+      display: block;
+      margin-bottom: 26px;
+      color: var(--muted-2);
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.16em;
     }
 
-    .highlight__value {
+    .spec__value {
       display: block;
       font-family: var(--font-display);
-      font-size: 1.65rem;
-      font-weight: 700;
-      letter-spacing: -0.03em;
-      color: var(--green);
-    }
-
-    .highlight__label {
-      display: block;
-      margin-top: 6px;
-      font-family: var(--font-display);
-      font-size: 0.98rem;
-      font-weight: 600;
+      font-size: clamp(1.9rem, 3vw, 2.6rem);
+      font-weight: 500;
+      letter-spacing: -0.05em;
+      line-height: 1;
       color: var(--text);
     }
 
-    .highlight p {
+    .spec:hover .spec__value {
+      color: var(--green);
+    }
+
+    .spec__label {
+      display: block;
       margin-top: 10px;
+      color: var(--green);
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .spec p {
+      margin-top: 12px;
+      max-width: 260px;
       color: var(--muted);
-      font-size: 0.86rem;
+      font-size: 0.82rem;
       line-height: 1.65;
     }
 
     @media (max-width: 1024px) {
-      .highlights {
+      .specs {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
-      .highlight:nth-child(2n) {
-        border-right: 0;
+      .spec,
+      .spec + .spec {
+        padding-left: 0;
+        padding-right: 26px;
       }
-      .highlight:nth-child(-n + 2) {
-        border-bottom: 1px solid var(--border);
+      .spec:nth-child(2n) {
+        border-right: 0;
+        padding-right: 0;
+      }
+      .spec:nth-child(2n + 1) {
+        padding-right: 26px;
+      }
+      .spec:nth-child(-n + 2) {
+        border-bottom: 1px solid var(--line-soft);
       }
     }
 
     @media (max-width: 620px) {
-      .highlights {
+      .specs {
         grid-template-columns: 1fr;
       }
-      .highlight {
+      .spec,
+      .spec + .spec {
+        padding: 24px 0;
         border-right: 0;
-        border-bottom: 1px solid var(--border);
+        border-bottom: 1px solid var(--line-soft);
       }
-      .highlight:last-child {
+      .spec:last-child {
         border-bottom: 0;
+      }
+      .spec__index {
+        margin-bottom: 16px;
       }
     }
   `,
@@ -119,26 +147,22 @@ export class HighlightsComponent {
     {
       value: '100%',
       label: 'Sob medida',
-      description: 'Código próprio, escrito para o seu contexto. Nada de templates genéricos empurrados na sua operação.',
-      icon: 'code',
+      description: 'Código próprio, escrito para o seu contexto. Nada de template genérico empurrado na operação.',
     },
     {
       value: '< 24h',
       label: 'Retorno inicial',
       description: 'Você envia a ideia e recebe um direcionamento claro de escopo, caminho técnico e próximos passos.',
-      icon: 'clock',
     },
     {
       value: '1:1',
       label: 'Contato direto',
       description: 'Sem intermediários: você fala com quem projeta, programa e acompanha a entrega do projeto.',
-      icon: 'users',
     },
     {
       value: '360°',
       label: 'Visão completa',
-      description: 'Estratégia, design, frontend, backend, banco de dados, integrações, deploy e evolução contínua.',
-      icon: 'globe',
+      description: 'Estratégia, design, frontend, backend, dados, integrações, deploy e evolução contínua.',
     },
   ];
 }

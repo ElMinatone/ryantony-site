@@ -18,10 +18,15 @@ export class HeaderComponent {
   protected readonly scrolled = signal(false);
   protected readonly menuOpen = signal(false);
   protected readonly active = signal('inicio');
+  protected readonly progress = signal(0);
 
   @HostListener('window:scroll')
   protected onScroll(): void {
-    this.scrolled.set(window.scrollY > 24);
+    const top = window.scrollY;
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+
+    this.scrolled.set(top > 16);
+    this.progress.set(max > 0 ? Math.min(1, top / max) : 0);
     this.updateActive();
   }
 
@@ -45,7 +50,7 @@ export class HeaderComponent {
   }
 
   private updateActive(): void {
-    const offset = window.scrollY + 140;
+    const offset = window.scrollY + 150;
     let current = 'inicio';
 
     for (const link of this.links) {
@@ -55,7 +60,7 @@ export class HeaderComponent {
       }
     }
 
-    if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 80) {
+    if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 90) {
       current = this.links[this.links.length - 1].id;
     }
 

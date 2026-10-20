@@ -5,7 +5,6 @@ import { QuoteService } from '../../core/quote.service';
 
 interface Service {
   number: string;
-  icon: string;
   title: string;
   tagline: string;
   description: string;
@@ -26,11 +25,10 @@ export class ServicesComponent {
   protected readonly services: readonly Service[] = [
     {
       number: '01',
-      icon: 'browser',
       title: 'Sites e Landing Pages',
       tagline: 'Presença digital que trabalha pela sua marca',
       description:
-        'Sites institucionais, páginas de campanha, portfólios e landing pages pensados para carregar rápido, aparecer no Google e transformar visita em contato. Arquitetura da informação, redação de seções, design responsivo e publicação incluídos no fluxo.',
+        'Sites institucionais, páginas de campanha, portfólios e landing pages pensados para carregar rápido, aparecer no Google e transformar visita em contato. Arquitetura da informação, redação das seções, design responsivo e publicação incluídos no fluxo.',
       deliverables: [
         'Design exclusivo e 100% responsivo',
         'SEO técnico, meta tags e dados estruturados',
@@ -40,7 +38,6 @@ export class ServicesComponent {
     },
     {
       number: '02',
-      icon: 'layers',
       title: 'Sistemas Web Fullstack',
       tagline: 'Software sob medida para a sua operação',
       description:
@@ -54,7 +51,6 @@ export class ServicesComponent {
     },
     {
       number: '03',
-      icon: 'api',
       title: 'APIs e Integrações',
       tagline: 'Seus sistemas conversando entre si',
       description:
@@ -68,7 +64,6 @@ export class ServicesComponent {
     },
     {
       number: '04',
-      icon: 'automation',
       title: 'Automação de Processos',
       tagline: 'Menos tarefas manuais, mais tempo útil',
       description:
@@ -82,7 +77,6 @@ export class ServicesComponent {
     },
     {
       number: '05',
-      icon: 'cart',
       title: 'E-commerce e Produtos Digitais',
       tagline: 'Vender online com experiência impecável',
       description:
@@ -96,7 +90,6 @@ export class ServicesComponent {
     },
     {
       number: '06',
-      icon: 'shield',
       title: 'Performance, Segurança e Infra',
       tagline: 'Base sólida para crescer sem sustos',
       description:

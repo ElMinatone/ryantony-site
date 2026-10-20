@@ -1,107 +1,110 @@
 <section class="hero" id="inicio">
-  <div class="hero__decor" aria-hidden="true">
-    <span class="hero__beam"></span>
-    <span class="hero__node hero__node--1"></span>
-    <span class="hero__node hero__node--2"></span>
-    <span class="hero__node hero__node--3"></span>
-  </div>
+  <app-pixel-field class="hero__field" />
+  <div class="hero__glow" aria-hidden="true"></div>
+  <div class="hero__rule" aria-hidden="true"></div>
 
-  <div class="container hero__grid">
-    <div class="hero__content">
-      <span class="eyebrow" appReveal>
-        <span class="dot"></span>
-        {{ site.signature }}
+  <div class="container hero__inner">
+    <div class="hero__meta" appReveal>
+      <span class="index">/ 00 — INÍCIO</span>
+      <span class="hero__meta-signature">{{ site.signature }}</span>
+    </div>
+
+    <h1 class="hero__title">
+      <span class="hero__line"><span class="hero__word" appReveal="40">Tecnologia</span></span>
+      <span class="hero__line"><span class="hero__word" appReveal="110">que constrói</span></span>
+      <span class="hero__line hero__line--accent">
+        <span class="hero__block" aria-hidden="true"></span>
+        <span class="hero__word text-green" appReveal="180">ideias</span>
+        <span class="hero__cursor" aria-hidden="true"></span>
       </span>
+    </h1>
 
-      <h1 class="hero__title" appReveal="80">
-        Tecnologia que constrói
-        <span class="hero__highlight">ideias<em class="hero__cursor"></em></span>
-      </h1>
+    <p class="hero__lead" appReveal="240">
+      A RYANTONY desenvolve <strong>sites, sistemas e soluções online fullstack</strong> para empresas
+      que precisam tirar um projeto do papel, organizar processos e crescer com tecnologia. Do
+      primeiro rascunho ao deploy: estratégia, design, código, banco de dados, integrações e
+      infraestrutura — com você acompanhando cada etapa.
+    </p>
 
-      <p class="hero__lead" appReveal="160">
-        A RYANTONY desenvolve <strong>sites, sistemas e soluções online fullstack</strong> para empresas
-        que precisam tirar um projeto do papel, organizar processos e crescer com tecnologia. Do
-        primeiro rascunho ao deploy, cuidamos de tudo: estratégia, design, código, banco de dados,
-        integrações e infraestrutura — com você acompanhando cada etapa.
-      </p>
-
-      <div class="hero__actions" appReveal="220">
-        <button class="btn btn-primary" type="button" (click)="openQuote()">
-          <app-icon name="spark" [size]="18" />
-          Faça um orçamento
-        </button>
-        <a class="btn btn-ghost" href="#servicos">
-          Conhecer as soluções
-          <app-icon name="arrow-right" [size]="18" />
-        </a>
-      </div>
-
-      <ul class="hero__capabilities" appReveal="280">
-        @for (item of capabilities; track item) {
-          <li>
-            <app-icon name="check" [size]="15" />
-            {{ item }}
-          </li>
-        }
-      </ul>
-
-      <a class="hero__contact" [href]="site.phoneHref" appReveal="320">
-        <span class="hero__contact-icon"><app-icon name="phone" [size]="17" /></span>
-        <span class="hero__contact-text">
-          <small>Fale direto com {{ site.contactName }}</small>
-          <strong>{{ site.phoneDisplay }}</strong>
-        </span>
-        <app-icon class="hero__contact-arrow" name="arrow-up-right" [size]="16" />
+    <div class="hero__actions btn-row" appReveal="300">
+      <button class="btn btn-primary" type="button" (click)="openQuote()">
+        Iniciar um projeto
+        <app-icon name="arrow-up-right" [size]="17" />
+      </button>
+      <a class="btn btn-ghost" href="#servicos">
+        Ver capacidades
+        <app-icon name="arrow-right" [size]="17" />
       </a>
     </div>
 
-    <div class="hero__visual" appReveal="180">
-      <div class="code-window">
-        <div class="code-window__top">
-          <span class="code-window__dots"><i></i><i></i><i></i></span>
-          <span class="code-window__file">ryantony / solucao.ts</span>
-          <span class="tag tag--green">typescript</span>
+    <div class="hero__specimen" appReveal="220" appTilt="6">
+      <div class="specimen">
+        <span class="specimen__corner specimen__corner--tl"></span>
+        <span class="specimen__corner specimen__corner--tr"></span>
+        <span class="specimen__corner specimen__corner--bl"></span>
+        <span class="specimen__corner specimen__corner--br"></span>
+
+        <div class="specimen__top">
+          <span class="specimen__label">RYANTONY / SÍMBOLO</span>
+          <span class="specimen__label">V 1.0 — 2026</span>
         </div>
 
-        <pre class="code-window__body" aria-label="Exemplo de código de uma solução RYANTONY"><code><span class="c">// tecnologia que constrói ideias</span>
-<span class="k">const</span> <span class="v">ideia</span> <span class="p">=</span> <span class="s">'seu negócio'</span><span class="p">;</span>
-<span class="k">const</span> <span class="v">stack</span> <span class="p">= [</span><span class="s">'angular'</span><span class="p">,</span> <span class="s">'node'</span><span class="p">,</span> <span class="s">'postgres'</span><span class="p">];</span>
-
-<span class="k">async function</span> <span class="f">construir</span><span class="p">(</span><span class="v">ideia</span><span class="p">) &#123;</span>
-  <span class="k">const</span> <span class="v">plano</span> <span class="p">=</span> <span class="k">await</span> <span class="f">entender</span><span class="p">(</span><span class="v">ideia</span><span class="p">);</span>
-  <span class="k">const</span> <span class="v">produto</span> <span class="p">=</span> <span class="k">await</span> <span class="f">desenvolver</span><span class="p">(</span><span class="v">plano</span><span class="p">);</span>
-  <span class="k">return</span> <span class="f">deploy</span><span class="p">(</span><span class="v">produto</span><span class="p">, &#123;</span> <span class="v">escala</span><span class="p">:</span> <span class="k">true</span> <span class="p">&#125;);</span>
-<span class="p">&#125;</span><em class="code-window__cursor"></em></code></pre>
-
-        <div class="code-window__bottom">
-          <span class="code-window__status"><i></i> build concluído</span>
-          <span class="code-window__chips">
-            <span class="tag">responsivo</span>
-            <span class="tag">otimizado</span>
-            <span class="tag">seguro</span>
-          </span>
+        <div class="specimen__stage">
+          <span class="specimen__axis specimen__axis--x" aria-hidden="true"></span>
+          <span class="specimen__axis specimen__axis--y" aria-hidden="true"></span>
+          <span class="specimen__orbit" aria-hidden="true"></span>
+          <img
+            class="specimen__symbol"
+            src="images/ryantony-symbol-transparent.png"
+            alt="Símbolo da marca RYANTONY"
+            width="251"
+            height="249"
+          />
+          <span class="specimen__shard specimen__shard--1" aria-hidden="true"></span>
+          <span class="specimen__shard specimen__shard--2" aria-hidden="true"></span>
+          <span class="specimen__shard specimen__shard--3" aria-hidden="true"></span>
         </div>
-      </div>
 
-      <div class="float float--stack">
-        <app-icon name="layers" [size]="16" />
-        <span><strong>Fullstack</strong> front + back</span>
-      </div>
-
-      <div class="float float--deploy">
-        <app-icon name="refresh" [size]="16" />
-        <span><strong>Entrega contínua</strong> do MVP à evolução</span>
+        <div class="specimen__bottom">
+          <div>
+            <span class="specimen__label specimen__label--strong">DESENVOLVIMENTO</span>
+            <span class="specimen__label">PROGRAMAÇÃO</span>
+            <span class="specimen__label">SOLUÇÕES</span>
+          </div>
+          <span class="specimen__side">TECNOLOGIA QUE CONSTRÓI IDEIAS</span>
+        </div>
       </div>
     </div>
   </div>
 
-  <div class="marquee" aria-hidden="true">
-    <div class="marquee__track">
-      @for (word of marquee; track word) {
-        <span class="marquee__item">{{ word }}</span>
+  <div class="container hero__foot" appReveal="340">
+    <a class="hero__direct" [href]="site.phoneHref">
+      <span class="hero__direct-icon"><app-icon name="phone" [size]="16" /></span>
+      <span class="hero__direct-text">
+        <small>Falar direto com</small>
+        <strong>{{ site.contactName }} — {{ site.phoneDisplay }}</strong>
+      </span>
+      <app-icon class="hero__direct-arrow" name="arrow-up-right" [size]="15" />
+    </a>
+
+    @for (item of footItems; track item.label) {
+      <div class="hero__foot-item">
+        <app-icon [name]="item.icon" [size]="16" />
+        <span>
+          <strong>{{ item.label }}</strong>
+          {{ item.value }}
+        </span>
+      </div>
+    }
+  </div>
+
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker__track">
+      @for (word of ticker; track word) {
+        <span class="ticker__item">{{ word }}</span>
       }
-      @for (word of marquee; track word + '-dup') {
-        <span class="marquee__item">{{ word }}</span>
+      @for (word of ticker; track word + '-dup') {
+        <span class="ticker__item">{{ word }}</span>
       }
     </div>
   </div>

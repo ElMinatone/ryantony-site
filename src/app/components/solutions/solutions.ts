@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { IconComponent } from '../../shared/icon';
 import { RevealDirective } from '../../shared/reveal.directive';
 import { QuoteService } from '../../core/quote.service';
+import { SITE } from '../../core/site-info';
 
 interface Solution {
   step: string;
@@ -21,6 +22,8 @@ interface Solution {
 })
 export class SolutionsComponent {
   private readonly quote = inject(QuoteService);
+
+  protected readonly site = SITE;
 
   protected readonly solutions: readonly Solution[] = [
     {

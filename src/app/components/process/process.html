@@ -1,53 +1,58 @@
 <section class="section section-line" id="processo">
   <div class="container">
-    <header class="section-head section-head--center" appReveal>
-      <span class="eyebrow"><span class="dot"></span>Metodologia</span>
-      <h2 class="section-title">
-        Um processo previsível para um
-        <span class="text-green">resultado consistente</span>
-      </h2>
-      <p class="section-lead">
-        Desenvolvimento não precisa ser uma caixa-preta. Trabalhamos em etapas claras, com entregas
-        visíveis e comunicação direta. Assim você sabe exatamente em que ponto o projeto está, o que
-        vem a seguir e como cada decisão impacta o resultado final.
-      </p>
-    </header>
+    <div class="process__head">
+      <header class="section-head" appReveal>
+        <span class="eyebrow"><span class="dot"></span>Metodologia</span>
+        <h2 class="section-title">
+          Um processo previsível para um
+          <span class="text-green">resultado consistente</span>
+        </h2>
+      </header>
 
-    <div class="process">
-      @for (step of steps; track step.number; let i = $index) {
-        <article class="process__step" appReveal [appReveal]="i * 90">
-          <div class="process__marker" aria-hidden="true">
-            <span></span>
+      <p class="process__lead" appReveal="120">
+        Desenvolvimento não precisa ser uma caixa-preta. Trabalhamos em etapas claras, com entregas
+        visíveis e comunicação direta. Você sabe em que ponto o projeto está, o que vem a seguir e
+        como cada decisão impacta o resultado final.
+      </p>
+    </div>
+
+    <div class="pipeline" appReveal>
+      <span class="pipeline__line" aria-hidden="true"></span>
+
+      @for (step of steps; track step.number) {
+        <article class="pipeline__step">
+          <span class="pipeline__node" aria-hidden="true"></span>
+          <div class="pipeline__meta">
+            <span class="index">{{ step.number }}</span>
+            <span class="pipeline__icon"><app-icon [name]="step.icon" [size]="17" /></span>
           </div>
-          <span class="process__number">{{ step.number }}</span>
-          <span class="process__icon"><app-icon [name]="step.icon" [size]="20" /></span>
-          <h3 class="process__title">{{ step.title }}</h3>
-          <p class="process__description">{{ step.description }}</p>
-          <div class="process__output">
-            <app-icon name="check" [size]="13" />
+          <h3>{{ step.title }}</h3>
+          <p>{{ step.description }}</p>
+          <span class="pipeline__output">
+            <app-icon name="arrow-right" [size]="13" />
             {{ step.output }}
-          </div>
+          </span>
         </article>
       }
     </div>
 
     <div class="process__notes" appReveal>
       <div class="process__note">
-        <app-icon name="users" [size]="18" />
+        <app-icon name="users" [size]="17" />
         <div>
           <strong>Comunicação direta</strong>
           <span>Você fala com quem desenvolve, sem camadas de intermediários.</span>
         </div>
       </div>
       <div class="process__note">
-        <app-icon name="calendar" [size]="18" />
+        <app-icon name="calendar" [size]="17" />
         <div>
           <strong>Etapas documentadas</strong>
           <span>Escopo, aprovações e entregas registrados ao longo do projeto.</span>
         </div>
       </div>
       <div class="process__note">
-        <app-icon name="shield" [size]="18" />
+        <app-icon name="shield" [size]="17" />
         <div>
           <strong>Sem surpresas</strong>
           <span>Mudanças são conversadas antes de virarem custo ou prazo extra.</span>

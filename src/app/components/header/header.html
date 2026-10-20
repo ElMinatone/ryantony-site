@@ -4,8 +4,8 @@
       <img
         src="images/ryantony-logo-dark.png"
         alt="Logotipo RYANTONY"
-        width="152"
-        height="34"
+        width="142"
+        height="31"
         decoding="async"
       />
     </a>
@@ -33,13 +33,13 @@
 
     <div class="header__actions">
       <a class="header__phone" [href]="site.phoneHref">
-        <app-icon name="phone" [size]="15" />
+        <span class="header__phone-dot" aria-hidden="true"></span>
         <span>{{ site.phoneDisplay }}</span>
       </a>
 
       <button class="btn btn-primary btn-sm header__cta" type="button" (click)="openQuote()">
-        <app-icon name="spark" [size]="16" />
-        Faça um orçamento
+        Orçamento
+        <app-icon name="arrow-up-right" [size]="15" />
       </button>
 
       <button
@@ -50,17 +50,27 @@
         [attr.aria-label]="menuOpen() ? 'Fechar menu' : 'Abrir menu'"
         (click)="toggleMenu()"
       >
-        <app-icon [name]="menuOpen() ? 'close' : 'menu'" [size]="22" />
+        <app-icon [name]="menuOpen() ? 'close' : 'menu'" [size]="21" />
       </button>
     </div>
   </div>
 
+  <span
+    class="header__progress"
+    aria-hidden="true"
+    [style.transform]="'scaleX(' + progress() + ')'"
+  ></span>
+
   <div class="drawer" id="menu-mobile" [class.is-open]="menuOpen()" [attr.aria-hidden]="!menuOpen()">
     <nav class="drawer__nav" aria-label="Navegação mobile">
-      <a class="drawer__link" href="#inicio" (click)="closeMenu()">Início</a>
-      @for (link of links; track link.id) {
+      <a class="drawer__link" href="#inicio" (click)="closeMenu()">
+        <span class="drawer__index">00</span>
+        <span class="drawer__text">Início</span>
+      </a>
+      @for (link of links; track link.id; let i = $index) {
         <a class="drawer__link" [href]="'#' + link.id" (click)="closeMenu()">
-          <span>{{ link.label }}</span>
+          <span class="drawer__index">{{ i + 1 < 10 ? '0' + (i + 1) : i + 1 }}</span>
+          <span class="drawer__text">{{ link.label }}</span>
           <app-icon name="arrow-up-right" [size]="18" />
         </a>
       }
@@ -75,8 +85,8 @@
         </span>
       </a>
       <button class="btn btn-primary btn-block" type="button" (click)="openQuote()">
-        <app-icon name="spark" [size]="16" />
         Faça um orçamento
+        <app-icon name="arrow-up-right" [size]="16" />
       </button>
       <p class="drawer__signature">{{ site.signature }}</p>
     </div>
