@@ -1,0 +1,86 @@
+<dialog
+  #dialog
+  class="quote"
+  aria-labelledby="quote-title"
+  aria-describedby="quote-description"
+  (cancel)="onCancel($event)"
+  (close)="onDialogClose()"
+  (click)="onBackdrop($event)"
+>
+  <div class="quote__panel">
+    <div class="quote__glow" aria-hidden="true"></div>
+
+    <div class="quote__top">
+      <span class="quote__badge"><span></span>Orçamento</span>
+      <button class="quote__close" type="button" aria-label="Fechar janela de orçamento" (click)="close()">
+        <app-icon name="close" [size]="19" />
+      </button>
+    </div>
+
+    <h2 class="quote__title" id="quote-title">
+      Vamos tirar sua ideia
+      <span class="text-green">do papel?</span>
+    </h2>
+
+    <p class="quote__description" id="quote-description">
+      Fale diretamente com {{ site.contactName }} para alinhar escopo, prazo e investimento. A ligação
+      é o caminho mais rápido para receber um direcionamento claro — sem intermediários e sem
+      compromisso.
+    </p>
+
+    <div class="quote__person">
+      <span class="quote__avatar">RC</span>
+      <div class="quote__person-info">
+        <strong>{{ site.contactName }}</strong>
+        <span>{{ site.contactRole }}</span>
+      </div>
+      <span class="quote__status"><i></i> Atendimento direto</span>
+    </div>
+
+    <div class="quote__actions">
+      <a
+        #callButton
+        class="btn btn-primary btn-block quote__call"
+        [href]="site.phoneHref"
+        aria-label="Ligar para Ryan Christian no número 495-044-9327"
+      >
+        <app-icon name="phone" [size]="19" />
+        Ligar para {{ site.phoneDisplay }}
+      </a>
+      <button class="btn btn-ghost btn-block" type="button" (click)="copyNumber()">
+        <app-icon [name]="copyState() === 'copied' ? 'check' : 'copy'" [size]="17" />
+        {{
+          copyState() === 'copied'
+            ? 'Número copiado'
+            : copyState() === 'error'
+              ? 'Copie o número acima'
+              : 'Copiar número'
+        }}
+      </button>
+    </div>
+
+    <p class="quote__copy-status" aria-live="polite">
+      @if (copyState() === 'copied') {
+        Número copiado para a área de transferência.
+      } @else if (copyState() === 'error') {
+        Não foi possível copiar automaticamente. Use o número exibido no botão acima.
+      }
+    </p>
+
+    <ul class="quote__perks">
+      <li><app-icon name="check" [size]="14" /> Atendimento remoto</li>
+      <li><app-icon name="check" [size]="14" /> Resposta inicial em até 24h</li>
+      <li><app-icon name="check" [size]="14" /> Orçamento sem compromisso</li>
+    </ul>
+
+    <div class="quote__tip">
+      <app-icon name="spark" [size]="17" />
+      <p>
+        <strong>Para a conversa render mais:</strong> tenha em mente o objetivo do projeto, o prazo
+        desejado e a faixa de investimento. O restante desenhamos juntos.
+      </p>
+    </div>
+
+    <p class="quote__signature">{{ site.signature }}</p>
+  </div>
+</dialog>

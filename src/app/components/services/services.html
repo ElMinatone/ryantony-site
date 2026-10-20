@@ -1,0 +1,61 @@
+<section class="section" id="servicos">
+  <div class="container">
+    <header class="section-head" appReveal>
+      <span class="eyebrow"><span class="dot"></span>O que fazemos</span>
+      <h2 class="section-title">
+        Soluções digitais de ponta a ponta,
+        <span class="text-green">do site ao sistema</span>
+      </h2>
+      <p class="section-lead">
+        A RYANTONY atua em desenvolvimento, programação e soluções online. Reunimos design, código e
+        estratégia em um único fluxo de trabalho, para que o seu projeto saia do briefing e chegue ao
+        ar funcionando — com documentação, testes e suporte para evoluir.
+      </p>
+    </header>
+
+    <div class="services">
+      @for (service of services; track service.number; let i = $index) {
+        <article class="service card" appReveal [appReveal]="(i % 3) * 100">
+          <div class="service__top">
+            <span class="service__icon"><app-icon [name]="service.icon" [size]="22" /></span>
+            <span class="service__number">{{ service.number }}</span>
+          </div>
+
+          <h3 class="service__title">{{ service.title }}</h3>
+          <p class="service__tagline">{{ service.tagline }}</p>
+          <p class="service__description">{{ service.description }}</p>
+
+          <ul class="service__list">
+            @for (item of service.deliverables; track item) {
+              <li>
+                <app-icon name="check" [size]="14" />
+                {{ item }}
+              </li>
+            }
+          </ul>
+
+          <div class="service__tags">
+            @for (tag of service.tags; track tag) {
+              <span class="tag">{{ tag }}</span>
+            }
+          </div>
+        </article>
+      }
+    </div>
+
+    <div class="services__note card" appReveal>
+      <div class="services__note-text">
+        <h3>Não encontrou exatamente o que precisa?</h3>
+        <p>
+          Cada projeto é diferente. Se você tem uma demanda específica — uma integração difícil, um
+          processo manual que consome horas da equipe ou uma ideia ainda em rascunho — conversamos
+          sobre o caminho técnico antes de qualquer contrato.
+        </p>
+      </div>
+      <button class="btn btn-primary" type="button" (click)="openQuote()">
+        <app-icon name="phone" [size]="17" />
+        Falar com um desenvolvedor
+      </button>
+    </div>
+  </div>
+</section>

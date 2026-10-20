@@ -1,0 +1,72 @@
+<section class="section section-line" id="solucoes">
+  <div class="container solutions">
+    <aside class="solutions__intro">
+      <header class="section-head" appReveal>
+        <span class="eyebrow"><span class="dot"></span>Como atuamos</span>
+        <h2 class="section-title">
+          Um caminho claro para cada
+          <span class="text-green">momento do negócio</span>
+        </h2>
+        <p class="section-lead">
+          Nem todo projeto começa do zero — e nem todo problema precisa de um sistema novo. Por isso,
+          organizamos o trabalho em três frentes. Identificamos com você em qual delas o projeto está e
+          desenhamos o próximo passo com escopo, prazo e prioridades.
+        </p>
+      </header>
+
+      <div class="solutions__quote card" appReveal="120">
+        <span class="solutions__quote-mark" aria-hidden="true">“</span>
+        <p class="solutions__quote-text">Tecnologia que constrói ideias.</p>
+        <p class="solutions__quote-sub">Código · Processos · Resultados</p>
+        <span class="solutions__quote-line"></span>
+        <p class="solutions__quote-brand">RYANTONY</p>
+      </div>
+    </aside>
+
+    <div class="solutions__list">
+      @for (solution of solutions; track solution.step; let i = $index) {
+        <article class="solution card" appReveal [appReveal]="i * 110">
+          <div class="solution__rail">
+            <span class="solution__step">{{ solution.step }}</span>
+            <span class="solution__dot"></span>
+          </div>
+
+          <div class="solution__content">
+            <div class="solution__head">
+              <span class="solution__icon"><app-icon [name]="solution.icon" [size]="21" /></span>
+              <div>
+                <h3>{{ solution.title }}</h3>
+                <p class="solution__audience">{{ solution.audience }}</p>
+              </div>
+            </div>
+
+            <p class="solution__description">{{ solution.description }}</p>
+
+            <ul class="solution__items">
+              @for (item of solution.items; track item) {
+                <li><app-icon name="check" [size]="14" />{{ item }}</li>
+              }
+            </ul>
+
+            <button class="solution__link" type="button" (click)="openQuote()">
+              Conversar sobre este caminho
+              <app-icon name="arrow-right" [size]="16" />
+            </button>
+          </div>
+        </article>
+      }
+
+      <div class="solutions__help" appReveal>
+        <app-icon name="message" [size]="20" />
+        <p>
+          <strong>Ainda em dúvida?</strong> Em uma conversa rápida, mapeamos o seu cenário e indicamos
+          a trilha mais coerente — mesmo que o projeto ainda não esteja pronto para começar.
+        </p>
+        <button class="btn btn-ghost btn-sm" type="button" (click)="openQuote()">
+          Tirar dúvidas
+          <app-icon name="arrow-up-right" [size]="15" />
+        </button>
+      </div>
+    </div>
+  </div>
+</section>

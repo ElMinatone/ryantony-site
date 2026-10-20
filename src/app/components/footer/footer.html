@@ -1,0 +1,65 @@
+<footer class="footer">
+  <div class="container">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <a class="footer__logo" href="#inicio" aria-label="RYANTONY — voltar ao início">
+          <img
+            src="images/ryantony-logo-dark.png"
+            alt="Logotipo RYANTONY"
+            width="162"
+            height="36"
+            loading="lazy"
+          />
+        </a>
+        <p>
+          Desenvolvimento de sites, sistemas e soluções online fullstack. Tecnologia sob medida, do
+          planejamento ao deploy, com acompanhamento direto em cada etapa.
+        </p>
+        <span class="footer__signature">TECNOLOGIA QUE CONSTRÓI IDEIAS</span>
+      </div>
+
+      <nav class="footer__col" aria-label="Navegação do rodapé">
+        <h3>Navegação</h3>
+        <ul>
+          <li><a href="#inicio">Início</a></li>
+          @for (link of links; track link.id) {
+            <li><a [href]="'#' + link.id">{{ link.label }}</a></li>
+          }
+        </ul>
+      </nav>
+
+      <div class="footer__col">
+        <h3>Serviços</h3>
+        <ul>
+          @for (service of services; track service) {
+            <li><a href="#servicos">{{ service }}</a></li>
+          }
+        </ul>
+      </div>
+
+      <div class="footer__col footer__contact">
+        <h3>Contato</h3>
+        <span class="footer__contact-label">Atendimento direto</span>
+        <strong class="footer__contact-name">{{ site.contactName }}</strong>
+        <a class="footer__phone" [href]="site.phoneHref">
+          <app-icon name="phone" [size]="16" />
+          {{ site.phoneDisplay }}
+        </a>
+        <p>Projetos remotos, com reuniões online e comunicação direta.</p>
+        <button class="btn btn-primary btn-sm" type="button" (click)="openQuote()">
+          <app-icon name="spark" [size]="15" />
+          Faça um orçamento
+        </button>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <span>© {{ year }} RYANTONY. Todos os direitos reservados.</span>
+      <span class="footer__mid">{{ site.signature }}</span>
+      <button class="footer__top-link" type="button" (click)="toTop()">
+        Voltar ao topo
+        <app-icon name="arrow-up" [size]="14" />
+      </button>
+    </div>
+  </div>
+</footer>

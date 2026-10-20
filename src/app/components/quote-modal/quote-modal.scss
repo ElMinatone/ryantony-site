@@ -1,0 +1,286 @@
+.quote {
+  width: min(560px, calc(100vw - 28px));
+  max-width: 560px;
+  max-height: calc(100dvh - 28px);
+  margin: auto;
+  padding: 0;
+  border: 0;
+  border-radius: 22px;
+  background: transparent;
+  color: var(--text);
+  font-family: var(--font-body);
+  overflow: visible;
+}
+
+.quote[open] {
+  animation: quote-in 0.32s var(--ease);
+}
+
+.quote::backdrop {
+  background: rgba(0, 0, 0, 0.74);
+  backdrop-filter: blur(10px);
+  animation: backdrop-in 0.3s ease;
+}
+
+.quote__panel {
+  position: relative;
+  max-height: calc(100dvh - 28px);
+  padding: 30px;
+  overflow-y: auto;
+  border: 1px solid var(--green-line);
+  border-radius: 22px;
+  background:
+    radial-gradient(ellipse 80% 40% at 50% 0%, rgba(192, 255, 107, 0.08), transparent 70%),
+    linear-gradient(170deg, #0d0d0d, #050505 62%);
+  box-shadow:
+    0 40px 120px rgba(0, 0, 0, 0.8),
+    0 0 80px rgba(192, 255, 107, 0.07),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.quote__glow {
+  position: absolute;
+  top: -150px;
+  right: -80px;
+  width: 330px;
+  height: 280px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(192, 255, 107, 0.24), transparent 68%);
+  filter: blur(22px);
+  pointer-events: none;
+}
+
+.quote__top {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.quote__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 11px;
+  border: 1px solid var(--green-line);
+  border-radius: 999px;
+  background: var(--green-soft);
+  color: var(--green);
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.quote__badge span {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 10px var(--green);
+}
+
+.quote__close {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--border-strong);
+  border-radius: 10px;
+  color: var(--muted);
+  background: rgba(255, 255, 255, 0.03);
+  transition: color 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+}
+
+.quote__close:hover {
+  border-color: var(--green-line);
+  background: var(--green-soft);
+  color: var(--green);
+}
+
+.quote__title {
+  position: relative;
+  margin-top: 20px;
+  font-size: clamp(1.7rem, 4.2vw, 2.25rem);
+  line-height: 1.06;
+}
+
+.quote__description {
+  position: relative;
+  margin-top: 13px;
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.72;
+}
+
+.quote__person {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 20px;
+  padding: 13px 14px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.quote__avatar {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  flex: none;
+  border: 1px solid var(--green-line);
+  border-radius: 50%;
+  background: rgba(192, 255, 107, 0.12);
+  color: var(--green);
+  font-family: var(--font-display);
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
+.quote__person-info strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.quote__person-info span {
+  display: block;
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 0.7rem;
+}
+
+.quote__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+  color: var(--green);
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.quote__status i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 10px var(--green);
+  animation: pulse 2.4s ease-in-out infinite;
+}
+
+.quote__actions {
+  position: relative;
+  display: grid;
+  gap: 9px;
+  margin-top: 18px;
+}
+
+.quote__call {
+  padding: 15px 20px;
+  font-size: 1rem;
+}
+
+.quote__copy-status {
+  min-height: 17px;
+  margin-top: 7px;
+  color: var(--green);
+  font-size: 0.68rem;
+  text-align: center;
+}
+
+.quote__perks {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 18px;
+  margin-top: 8px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+
+.quote__perks li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.63rem;
+}
+
+.quote__perks app-icon {
+  color: var(--green);
+}
+
+.quote__tip {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 18px;
+  padding: 13px 14px;
+  border: 1px dashed var(--green-line);
+  border-radius: 10px;
+  background: rgba(192, 255, 107, 0.03);
+  color: var(--green);
+}
+
+.quote__tip p {
+  color: var(--muted);
+  font-size: 0.76rem;
+  line-height: 1.6;
+}
+
+.quote__tip strong {
+  color: var(--light-gray);
+  font-weight: 500;
+}
+
+.quote__signature {
+  margin-top: 16px;
+  color: var(--muted-2);
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.18em;
+  text-align: center;
+}
+
+@keyframes quote-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes backdrop-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 520px) {
+  .quote__panel {
+    padding: 24px;
+  }
+  .quote__status {
+    display: none;
+  }
+  .quote__perks {
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+}

@@ -1,0 +1,75 @@
+<section class="section section-line" id="sobre">
+  <div class="container about">
+    <div class="about__content">
+      <header class="section-head" appReveal>
+        <span class="eyebrow"><span class="dot"></span>Sobre a RYANTONY</span>
+        <h2 class="section-title">
+          Código com critério.
+          <span class="text-green">Design com propósito.</span>
+        </h2>
+        <p class="section-lead">
+          A RYANTONY é um estúdio de desenvolvimento focado em sites, sistemas e soluções online
+          fullstack. Unimos raciocínio técnico e cuidado visual para criar produtos digitais que
+          funcionam de verdade — na velocidade do usuário, na rotina da equipe e nos resultados do
+          negócio.
+        </p>
+        <p class="section-lead about__lead-second">
+          Não acreditamos em tecnologia pela tecnologia. Acreditamos em problemas bem entendidos,
+          escopo honesto e execução consistente. Do site institucional ao sistema interno, cada
+          projeto recebe a mesma atenção: estrutura limpa, experiência clara e uma base pronta para
+          crescer.
+        </p>
+      </header>
+
+      <div class="about__values">
+        @for (value of values; track value.title; let i = $index) {
+          <article class="about__value" appReveal [appReveal]="i * 80">
+            <span class="about__value-icon"><app-icon [name]="value.icon" [size]="18" /></span>
+            <div>
+              <h3>{{ value.title }}</h3>
+              <p>{{ value.description }}</p>
+            </div>
+          </article>
+        }
+      </div>
+
+      <div class="about__signature" appReveal>
+        <span class="about__signature-mark" aria-hidden="true"></span>
+        <div>
+          <strong>TECNOLOGIA QUE CONSTRÓI IDEIAS</strong>
+          <span>CÓDIGO · PROCESSOS · RESULTADOS</span>
+        </div>
+      </div>
+    </div>
+
+    <aside class="about__contact card" appReveal="120">
+      <div class="about__contact-bg" aria-hidden="true">
+        <img src="images/ryantony-symbol.png" alt="" width="256" height="256" loading="lazy" />
+      </div>
+
+      <div class="about__avatar">RC</div>
+      <h3>{{ site.contactName }}</h3>
+      <p class="about__role">{{ site.contactRole }}</p>
+      <p class="about__contact-text">
+        Atendimento direto, do primeiro contato ao pós-lançamento. Você conversa com quem projeta e
+        programa o seu projeto — sem intermediários e sem promessas vagas.
+      </p>
+
+      <a class="about__phone" [href]="site.phoneHref">
+        <app-icon name="phone" [size]="17" />
+        {{ site.phoneDisplay }}
+      </a>
+
+      <button class="btn btn-primary btn-block" type="button" (click)="openQuote()">
+        <app-icon name="spark" [size]="17" />
+        Falar sobre meu projeto
+      </button>
+
+      <ul class="about__contact-list">
+        <li><app-icon name="check" [size]="14" /> Retorno inicial em até 24h</li>
+        <li><app-icon name="check" [size]="14" /> Atendimento remoto e acompanhamento próximo</li>
+        <li><app-icon name="check" [size]="14" /> Orçamento sem compromisso</li>
+      </ul>
+    </aside>
+  </div>
+</section>

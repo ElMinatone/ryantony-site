@@ -1,0 +1,150 @@
+.cta {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(40px, 6vw, 80px) clamp(24px, 5vw, 72px);
+  border: 1px solid var(--green-line);
+  border-radius: 24px;
+  background:
+    radial-gradient(ellipse 70% 90% at 50% 120%, rgba(192, 255, 107, 0.13), transparent 70%),
+    linear-gradient(170deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.012) 55%);
+  text-align: center;
+}
+
+.cta__glow {
+  position: absolute;
+  top: -220px;
+  left: 50%;
+  width: 620px;
+  height: 420px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(192, 255, 107, 0.22), transparent 68%);
+  filter: blur(30px);
+  pointer-events: none;
+}
+
+.cta__pattern {
+  position: absolute;
+  inset: 0;
+  background-image: url('/images/pixel-pattern.svg');
+  background-size: 220px 220px;
+  opacity: 0.4;
+  mask-image: radial-gradient(ellipse at center, #000, transparent 76%);
+  -webkit-mask-image: radial-gradient(ellipse at center, #000, transparent 76%);
+  pointer-events: none;
+}
+
+.cta__watermark {
+  position: absolute;
+  right: -20px;
+  bottom: -46px;
+  color: transparent;
+  font-family: var(--font-display);
+  font-size: clamp(5rem, 15vw, 11rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.055);
+  pointer-events: none;
+  user-select: none;
+}
+
+.cta .eyebrow {
+  justify-content: center;
+}
+
+.cta__title {
+  position: relative;
+  max-width: 16ch;
+  margin: 0 auto;
+  font-size: clamp(2.2rem, 5vw, 4rem);
+  line-height: 1.03;
+}
+
+.cta__lead {
+  position: relative;
+  max-width: 620px;
+  margin: 22px auto 0;
+  color: var(--muted);
+  font-size: clamp(0.96rem, 1.2vw, 1.06rem);
+  line-height: 1.75;
+}
+
+.cta__actions {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 32px;
+}
+
+.cta__contact {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  margin-top: 28px;
+  font-size: 0.82rem;
+}
+
+.cta__contact-label {
+  color: var(--muted);
+}
+
+.cta__contact strong {
+  color: var(--text);
+  font-family: var(--font-display);
+  font-weight: 600;
+}
+
+.cta__dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--green);
+}
+
+.cta__notes {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px 26px;
+  margin-top: 30px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+
+.cta__notes li {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.02em;
+}
+
+.cta__notes app-icon {
+  color: var(--green);
+}
+
+@media (max-width: 600px) {
+  .cta {
+    border-radius: 18px;
+  }
+  .cta__actions {
+    flex-direction: column;
+  }
+  .cta__actions .btn {
+    width: 100%;
+  }
+  .cta__notes {
+    flex-direction: column;
+    align-items: center;
+    gap: 9px;
+  }
+}

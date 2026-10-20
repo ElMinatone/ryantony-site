@@ -1,0 +1,58 @@
+<section class="section section-line" id="processo">
+  <div class="container">
+    <header class="section-head section-head--center" appReveal>
+      <span class="eyebrow"><span class="dot"></span>Metodologia</span>
+      <h2 class="section-title">
+        Um processo previsível para um
+        <span class="text-green">resultado consistente</span>
+      </h2>
+      <p class="section-lead">
+        Desenvolvimento não precisa ser uma caixa-preta. Trabalhamos em etapas claras, com entregas
+        visíveis e comunicação direta. Assim você sabe exatamente em que ponto o projeto está, o que
+        vem a seguir e como cada decisão impacta o resultado final.
+      </p>
+    </header>
+
+    <div class="process">
+      @for (step of steps; track step.number; let i = $index) {
+        <article class="process__step" appReveal [appReveal]="i * 90">
+          <div class="process__marker" aria-hidden="true">
+            <span></span>
+          </div>
+          <span class="process__number">{{ step.number }}</span>
+          <span class="process__icon"><app-icon [name]="step.icon" [size]="20" /></span>
+          <h3 class="process__title">{{ step.title }}</h3>
+          <p class="process__description">{{ step.description }}</p>
+          <div class="process__output">
+            <app-icon name="check" [size]="13" />
+            {{ step.output }}
+          </div>
+        </article>
+      }
+    </div>
+
+    <div class="process__notes" appReveal>
+      <div class="process__note">
+        <app-icon name="users" [size]="18" />
+        <div>
+          <strong>Comunicação direta</strong>
+          <span>Você fala com quem desenvolve, sem camadas de intermediários.</span>
+        </div>
+      </div>
+      <div class="process__note">
+        <app-icon name="calendar" [size]="18" />
+        <div>
+          <strong>Etapas documentadas</strong>
+          <span>Escopo, aprovações e entregas registrados ao longo do projeto.</span>
+        </div>
+      </div>
+      <div class="process__note">
+        <app-icon name="shield" [size]="18" />
+        <div>
+          <strong>Sem surpresas</strong>
+          <span>Mudanças são conversadas antes de virarem custo ou prazo extra.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

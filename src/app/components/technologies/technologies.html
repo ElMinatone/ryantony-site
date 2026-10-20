@@ -1,0 +1,61 @@
+<section class="section section-line" id="tecnologias">
+  <div class="container tech">
+    <aside class="tech__intro">
+      <header class="section-head" appReveal>
+        <span class="eyebrow"><span class="dot"></span>Tecnologias</span>
+        <h2 class="section-title">
+          Stack moderna,
+          <span class="text-green">escolhida para durar</span>
+        </h2>
+        <p class="section-lead">
+          A tecnologia certa não é a mais badalada — é a que resolve o problema, cabe no orçamento e
+          continua sustentável daqui a alguns anos. Selecionamos as ferramentas a partir do escopo,
+          do volume de dados e da equipe que vai manter o projeto.
+        </p>
+      </header>
+
+      <ul class="tech__principles" appReveal="120">
+        <li>
+          <app-icon name="target" [size]="17" />
+          <span><strong>Problema primeiro.</strong> A stack serve ao projeto, nunca o contrário.</span>
+        </li>
+        <li>
+          <app-icon name="refresh" [size]="17" />
+          <span><strong>Manutenção fácil.</strong> Código organizado, tipado e documentado.</span>
+        </li>
+        <li>
+          <app-icon name="lock" [size]="17" />
+          <span><strong>Segurança por padrão.</strong> Autenticação, permissões e dados protegidos.</span>
+        </li>
+      </ul>
+
+      <div class="tech__daily card" appReveal="180">
+        <span class="tech__daily-label">Também no dia a dia</span>
+        <div class="tech__daily-items">
+          @for (tool of dailyTools; track tool) {
+            <span class="chip">{{ tool }}</span>
+          }
+        </div>
+      </div>
+    </aside>
+
+    <div class="tech__groups">
+      @for (group of groups; track group.title; let i = $index) {
+        <article class="tech-group card" appReveal [appReveal]="i * 80">
+          <div class="tech-group__head">
+            <span class="tech-group__icon"><app-icon [name]="group.icon" [size]="19" /></span>
+            <div>
+              <h3>{{ group.title }}</h3>
+              <p>{{ group.description }}</p>
+            </div>
+          </div>
+          <div class="tech-group__items">
+            @for (item of group.items; track item) {
+              <span class="chip">{{ item }}</span>
+            }
+          </div>
+        </article>
+      }
+    </div>
+  </div>
+</section>

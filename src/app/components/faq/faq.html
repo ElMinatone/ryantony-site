@@ -1,0 +1,62 @@
+<section class="section section-line" id="faq">
+  <div class="container faq">
+    <aside class="faq__intro">
+      <header class="section-head" appReveal>
+        <span class="eyebrow"><span class="dot"></span>Perguntas frequentes</span>
+        <h2 class="section-title">
+          Antes de começar,
+          <span class="text-green">vale saber</span>
+        </h2>
+        <p class="section-lead">
+          Reunimos as dúvidas que aparecem com mais frequência antes de um projeto. Se a sua pergunta
+          não estiver aqui, é só ligar — a conversa é direta e sem compromisso.
+        </p>
+      </header>
+
+      <div class="faq__support card" appReveal="120">
+        <span class="faq__support-icon"><app-icon name="message" [size]="20" /></span>
+        <h3>Prefere conversar?</h3>
+        <p>Fale direto com {{ site.contactName }} e tire suas dúvidas sobre escopo, prazo e investimento.</p>
+        <a class="faq__phone" [href]="site.phoneHref">
+          <app-icon name="phone" [size]="16" />
+          {{ site.phoneDisplay }}
+        </a>
+        <button class="btn btn-ghost btn-block" type="button" (click)="openQuote()">
+          Abrir opções de contato
+          <app-icon name="arrow-right" [size]="16" />
+        </button>
+      </div>
+    </aside>
+
+    <div class="faq__list" appReveal>
+      @for (item of items; track item.question; let i = $index) {
+        <div class="faq__item" [class.is-open]="openIndex() === i">
+          <h3>
+            <button
+              class="faq__question"
+              type="button"
+              [attr.aria-expanded]="openIndex() === i"
+              [attr.aria-controls]="'faq-answer-' + i"
+              [id]="'faq-question-' + i"
+              (click)="toggle(i)"
+            >
+              <span class="faq__number">{{ i + 1 < 10 ? '0' + (i + 1) : i + 1 }}</span>
+              <span class="faq__text">{{ item.question }}</span>
+              <span class="faq__plus" aria-hidden="true"></span>
+            </button>
+          </h3>
+          <div
+            class="faq__answer"
+            [id]="'faq-answer-' + i"
+            role="region"
+            [attr.aria-labelledby]="'faq-question-' + i"
+          >
+            <div>
+              <p>{{ item.answer }}</p>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>

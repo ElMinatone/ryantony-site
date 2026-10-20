@@ -1,0 +1,46 @@
+<section class="section section-line" id="contato">
+  <div class="container">
+    <div class="cta" appReveal>
+      <div class="cta__glow" aria-hidden="true"></div>
+      <div class="cta__pattern" aria-hidden="true"></div>
+      <span class="cta__watermark" aria-hidden="true">RYANTONY</span>
+
+      <span class="eyebrow"><span class="dot"></span>Próximo passo</span>
+
+      <h2 class="cta__title">
+        Sua ideia merece
+        <span class="text-green">sair do papel</span>.
+      </h2>
+
+      <p class="cta__lead">
+        Conte o que você quer construir. Em uma conversa direta, entendemos o contexto, alinhamos o
+        escopo e mostramos o caminho técnico para transformar a ideia em um produto digital
+        funcionando.
+      </p>
+
+      <div class="cta__actions">
+        <button class="btn btn-primary" type="button" (click)="openQuote()">
+          <app-icon name="spark" [size]="18" />
+          Faça um orçamento
+        </button>
+        <a class="btn btn-ghost" [href]="site.phoneHref">
+          <app-icon name="phone" [size]="17" />
+          {{ site.phoneDisplay }}
+        </a>
+      </div>
+
+      <div class="cta__contact">
+        <span class="cta__contact-label">Atendimento direto com</span>
+        <strong>{{ site.contactName }}</strong>
+        <span class="cta__dot" aria-hidden="true"></span>
+        <span class="cta__contact-label">Resposta inicial em até 24h</span>
+      </div>
+
+      <ul class="cta__notes">
+        <li><app-icon name="check" [size]="14" /> Orçamento sem compromisso</li>
+        <li><app-icon name="check" [size]="14" /> Escopo claro antes de começar</li>
+        <li><app-icon name="check" [size]="14" /> Atendimento remoto e direto</li>
+      </ul>
+    </div>
+  </div>
+</section>

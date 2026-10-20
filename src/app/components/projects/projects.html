@@ -1,0 +1,137 @@
+<section class="section section-line" id="projetos">
+  <div class="container">
+    <div class="projects__head">
+      <header class="section-head" appReveal>
+        <span class="eyebrow"><span class="dot"></span>Aplicações</span>
+        <h2 class="section-title">
+          Soluções que podemos
+          <span class="text-green">construir com você</span>
+        </h2>
+        <p class="section-lead">
+          Cada projeto nasce de um contexto diferente. Os cenários abaixo mostram como a RYANTONY
+          estrutura aplicações reais de mercado — do problema à interface, passando por dados,
+          integrações e operação.
+        </p>
+      </header>
+
+      <aside class="projects__disclaimer card" appReveal="120">
+        <app-icon name="spark" [size]="18" />
+        <p>
+          <strong>Exemplos de aplicação.</strong> São cenários ilustrativos, não cases de clientes.
+          O seu projeto será desenhado do zero, com escopo e identidade próprios.
+        </p>
+      </aside>
+    </div>
+
+    <div class="projects">
+      @for (project of projects; track project.title; let i = $index) {
+        <article class="project card" appReveal [appReveal]="(i % 2) * 100">
+          <div [class]="'project__visual project__visual--' + project.visual">
+            @switch (project.visual) {
+              @case ('dashboard') {
+                <div class="mock mock-dash" aria-hidden="true">
+                  <div class="mock-dash__side">
+                    <span class="mock-logo"></span>
+                    <i class="is-on"></i><i></i><i></i><i></i>
+                  </div>
+                  <div class="mock-dash__main">
+                    <div class="mock-dash__top"><span></span><b></b></div>
+                    <div class="mock-dash__tiles">
+                      <div><small></small><strong></strong></div>
+                      <div><small></small><strong></strong></div>
+                      <div><small></small><strong></strong></div>
+                    </div>
+                    <div class="mock-dash__chart">
+                      <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+                    </div>
+                    <div class="mock-dash__rows"><i></i><i></i><i></i></div>
+                  </div>
+                </div>
+              }
+
+              @case ('shop') {
+                <div class="mock mock-shop" aria-hidden="true">
+                  <div class="mock-shop__nav">
+                    <span class="mock-logo"></span>
+                    <i></i><i></i><i></i>
+                    <b class="mock-cart"></b>
+                  </div>
+                  <div class="mock-shop__hero">
+                    <small></small>
+                    <strong></strong>
+                    <em></em>
+                  </div>
+                  <div class="mock-shop__grid">
+                    <div class="mock-product"><span></span><i></i><b></b></div>
+                    <div class="mock-product"><span></span><i></i><b></b></div>
+                    <div class="mock-product"><span></span><i></i><b></b></div>
+                  </div>
+                </div>
+              }
+
+              @case ('portal') {
+                <div class="mock mock-portal" aria-hidden="true">
+                  <div class="mock-portal__card">
+                    <span class="mock-avatar"></span>
+                    <div class="mock-lines"><i></i><i></i></div>
+                    <span class="mock-badge">ativo</span>
+                  </div>
+                  <div class="mock-portal__rows">
+                    <div><span></span><i></i><b></b></div>
+                    <div><span></span><i></i><b></b></div>
+                    <div><span></span><i></i><b></b></div>
+                    <div><span></span><i></i><b></b></div>
+                  </div>
+                </div>
+              }
+
+              @case ('automation') {
+                <div class="mock mock-auto" aria-hidden="true">
+                  <div class="mock-auto__head">
+                    <span><i></i> pipeline / rotinas</span>
+                    <b>executando</b>
+                  </div>
+                  <div class="mock-auto__log">
+                    <p><b>09:00</b><span>sincronizar pedidos</span><em class="is-ok">ok</em></p>
+                    <p><b>09:01</b><span>atualizar estoque</span><em class="is-ok">ok</em></p>
+                    <p><b>09:02</b><span>gerar relatório diário</span><em class="is-ok">ok</em></p>
+                    <p><b>09:03</b><span>notificar equipe comercial</span><em class="is-run"></em></p>
+                  </div>
+                  <div class="mock-auto__progress"><span></span></div>
+                </div>
+              }
+            }
+          </div>
+
+          <div class="project__content">
+            <div class="project__tags">
+              @for (tag of project.tags; track tag) {
+                <span class="tag tag--green">{{ tag }}</span>
+              }
+            </div>
+            <h3>{{ project.title }}</h3>
+            <p class="project__description">{{ project.description }}</p>
+            <div class="project__outcome">
+              <span>Resultado esperado</span>
+              {{ project.outcome }}
+            </div>
+          </div>
+        </article>
+      }
+    </div>
+
+    <div class="projects__cta card" appReveal>
+      <div>
+        <h3>Tem um cenário parecido com algum destes?</h3>
+        <p>
+          Traga o seu desafio. Em uma conversa, entendemos o contexto e desenhamos uma proposta
+          técnica sob medida — sem compromisso.
+        </p>
+      </div>
+      <button class="btn btn-primary" type="button" (click)="openQuote()">
+        <app-icon name="spark" [size]="17" />
+        Fazer um orçamento
+      </button>
+    </div>
+  </div>
+</section>

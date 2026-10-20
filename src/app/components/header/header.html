@@ -1,0 +1,84 @@
+<header class="header" [class.is-scrolled]="scrolled()" [class.is-open]="menuOpen()">
+  <div class="header__bar container">
+    <a class="brand" href="#inicio" (click)="closeMenu()" aria-label="RYANTONY — voltar ao início">
+      <img
+        src="images/ryantony-logo-dark.png"
+        alt="Logotipo RYANTONY"
+        width="152"
+        height="34"
+        decoding="async"
+      />
+    </a>
+
+    <nav class="nav" aria-label="Navegação principal">
+      <a
+        class="nav__link"
+        href="#inicio"
+        [class.is-active]="active() === 'inicio'"
+        (click)="closeMenu()"
+      >
+        Início
+      </a>
+      @for (link of links; track link.id) {
+        <a
+          class="nav__link"
+          [href]="'#' + link.id"
+          [class.is-active]="active() === link.id"
+          (click)="closeMenu()"
+        >
+          {{ link.label }}
+        </a>
+      }
+    </nav>
+
+    <div class="header__actions">
+      <a class="header__phone" [href]="site.phoneHref">
+        <app-icon name="phone" [size]="15" />
+        <span>{{ site.phoneDisplay }}</span>
+      </a>
+
+      <button class="btn btn-primary btn-sm header__cta" type="button" (click)="openQuote()">
+        <app-icon name="spark" [size]="16" />
+        Faça um orçamento
+      </button>
+
+      <button
+        class="burger"
+        type="button"
+        [attr.aria-expanded]="menuOpen()"
+        aria-controls="menu-mobile"
+        [attr.aria-label]="menuOpen() ? 'Fechar menu' : 'Abrir menu'"
+        (click)="toggleMenu()"
+      >
+        <app-icon [name]="menuOpen() ? 'close' : 'menu'" [size]="22" />
+      </button>
+    </div>
+  </div>
+
+  <div class="drawer" id="menu-mobile" [class.is-open]="menuOpen()" [attr.aria-hidden]="!menuOpen()">
+    <nav class="drawer__nav" aria-label="Navegação mobile">
+      <a class="drawer__link" href="#inicio" (click)="closeMenu()">Início</a>
+      @for (link of links; track link.id) {
+        <a class="drawer__link" [href]="'#' + link.id" (click)="closeMenu()">
+          <span>{{ link.label }}</span>
+          <app-icon name="arrow-up-right" [size]="18" />
+        </a>
+      }
+    </nav>
+
+    <div class="drawer__footer">
+      <a class="drawer__phone" [href]="site.phoneHref">
+        <app-icon name="phone" [size]="18" />
+        <span>
+          <small>Falar com {{ site.contactName }}</small>
+          {{ site.phoneDisplay }}
+        </span>
+      </a>
+      <button class="btn btn-primary btn-block" type="button" (click)="openQuote()">
+        <app-icon name="spark" [size]="16" />
+        Faça um orçamento
+      </button>
+      <p class="drawer__signature">{{ site.signature }}</p>
+    </div>
+  </div>
+</header>
