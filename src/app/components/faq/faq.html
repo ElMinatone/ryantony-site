@@ -28,9 +28,9 @@
       </div>
     </aside>
 
-    <div class="faq__list" appReveal>
+    <div class="faq__list">
       @for (item of items; track item.question; let i = $index) {
-        <div class="faq__item" [class.is-open]="openIndex() === i">
+        <div class="faq__item" appReveal [appReveal]="i * 55" [class.is-open]="openIndex() === i">
           <h3>
             <button
               class="faq__question"

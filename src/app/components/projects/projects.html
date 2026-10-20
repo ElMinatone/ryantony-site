@@ -122,11 +122,13 @@
         </div>
       </div>
 
-      <div class="showcase__list" appReveal="100" aria-label="Exemplos de aplicação">
+      <div class="showcase__list" aria-label="Exemplos de aplicação">
         @for (item of projects; track item.title; let i = $index) {
           <button
             class="showcase__item"
             type="button"
+            appReveal
+            [appReveal]="i * 65"
             [class.is-active]="active() === i"
             [attr.aria-pressed]="active() === i"
             (mouseenter)="setActive(i)"

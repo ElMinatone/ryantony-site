@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { IconComponent } from '../../shared/icon';
+import { RevealDirective } from '../../shared/reveal.directive';
 import { QuoteService } from '../../core/quote.service';
 import { SmoothScrollService } from '../../core/smooth-scroll.service';
 import { NAV_LINKS, SITE } from '../../core/site-info';
@@ -7,7 +8,7 @@ import { NAV_LINKS, SITE } from '../../core/site-info';
 @Component({
   selector: 'app-footer',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [IconComponent],
+  imports: [IconComponent, RevealDirective],
   templateUrl: './footer.html',
   styleUrl: './footer.scss',
 })
