@@ -91,23 +91,19 @@ void main() {
   float aspect = uResolution.x / uResolution.y;
   float t = uTime * 0.68;
 
-  float horizon = 0.78 + sin(t * 0.31) * 0.006;
   vec2 ptr = clamp(uPointer, vec2(0.0), vec2(1.0));
-  horizon += (ptr.y - 0.5) * 0.035;
+  float lookX = (ptr.x - 0.5) * 0.34;
+  float lookY = (ptr.y - 0.5) * 0.05;
+  float horizon = 0.78 + sin(t * 0.31) * 0.006 - lookY;
 
   float sy0 = frag.y / uResolution.y;
   float sx0 = frag.x / uResolution.x;
-  float waterH = horizon - sy0;
-  float lod = 1.0;
-  if (waterH > 0.0 && waterH < 0.028) lod = 3.0;
-  else if (waterH > 0.0 && waterH < 0.11) lod = 2.0;
-
-  float cell = max(uCell * lod, 1.0);
+  float cell = max(uCell, 1.0);
   vec2 q = floor(frag / cell) * cell + cell * 0.5;
   float sx = q.x / uResolution.x;
   float sy = q.y / uResolution.y;
 
-  float yaw = (ptr.x - 0.5) * 0.22;
+  float yaw = lookX;
   float cy = cos(yaw);
   float syaw = sin(yaw);
 
@@ -127,7 +123,7 @@ void main() {
     vec3 dusk = vec3(0.045, 0.07, 0.02);
     col = mix(dusk, zenith, smoothstep(0.0, 0.72, skyT));
 
-    float moonX = 0.62 + sin(t * 0.07) * 0.035;
+    float moonX = 0.62 + sin(t * 0.07) * 0.035 - lookX * 1.15;
     float moonY = horizon + 0.055;
     vec2 moon = vec2(moonX, moonY);
     float md = length((vec2(sx, sy) - moon) * vec2(aspect, 1.0));
@@ -140,12 +136,14 @@ void main() {
     float shaft = 0.65 + 0.35 * sin(sx * 90.0 + t * 0.4);
     col += BRAND * ray * shaft * 0.22;
 
-    float cloud = sin(sx * 7.5 + t * 0.08) * sin(sx * 2.4 - 1.7);
+    float skySx = sx + lookX * 1.15;
+    float cloud = sin(skySx * 7.5 + t * 0.08) * sin(skySx * 2.4 - 1.7);
     cloud = smoothstep(0.15, 0.85, cloud) * exp(-skyT * 7.0);
     col += vec3(0.03, 0.045, 0.015) * cloud;
 
     skyLum = clamp(dot(col, vec3(0.3, 0.5, 0.2)) * 2.4, 0.0, 1.0);
-    star = step(0.9982, hash(floor(q / cell)));
+    vec2 skyQ = q + vec2(lookX * uResolution.x, -lookY * uResolution.y);
+    star = step(0.9982, hash(floor(skyQ / cell)));
     if (star > 0.5 && skyT > 0.18) {
       col += vec3(0.55, 0.62, 0.4);
       skyLum = max(skyLum, 0.35);
@@ -154,17 +152,18 @@ void main() {
     float py = max(horizon - sy, 0.004) / horizon;
     float z = 0.72 / pow(py, 1.18);
     float x = (sx - 0.5) * aspect * z * 0.92;
-    vec2 xz = vec2(x, z + uVoyage);
-    xz = mat2(cy, syaw, -syaw, cy) * xz;
+    vec2 view = mat2(cy, syaw, -syaw, cy) * vec2(x, z);
+    vec2 xz = vec2(view.x, view.y + uVoyage);
 
     float ptrPy = max(horizon - ptr.y, 0.02) / horizon;
     float ptrZ = 0.72 / pow(ptrPy, 1.18);
     float ptrX = (ptr.x - 0.5) * aspect * ptrZ * 0.92;
-    vec2 pxz = mat2(cy, syaw, -syaw, cy) * vec2(ptrX, ptrZ + uVoyage);
+    vec2 ptrView = mat2(cy, syaw, -syaw, cy) * vec2(ptrX, ptrZ);
+    vec2 pxz = vec2(ptrView.x, ptrView.y + uVoyage);
     float wakeD = length(xz - pxz);
     float wake = sin(wakeD * 8.5 - t * 5.2) * exp(-wakeD * 0.38);
     wake += sin(wakeD * 18.0 - t * 7.4) * exp(-wakeD * 0.72) * 0.4;
-    wake *= uWake * step(ptr.y, horizon + 0.02);
+    wake *= uWake * 0.4 * step(ptr.y, horizon + 0.02);
 
     float h = 0.0;
     float steep = 0.0;
@@ -181,10 +180,10 @@ void main() {
     float rip = sin(xz.x * 5.4 + t * 2.1) * sin(xz.y * 4.6 - t * 1.55);
     h += rip * 0.014 * near + wake * 0.055;
     N.x += cos(xz.x * 5.4 + t * 2.1) * sin(xz.y * 4.6 - t * 1.55) * 0.07 * near;
-    N.x += cos(wakeD * 8.5 - t * 5.2) * 0.22 * uWake * exp(-wakeD * 0.38);
+    N.x += cos(wakeD * 8.5 - t * 5.2) * 0.088 * uWake * exp(-wakeD * 0.38);
     N = normalize(N);
 
-    vec3 V = normalize(vec3(-(sx - 0.5) * aspect * 0.32, 0.46, -1.0));
+    vec3 V = normalize(vec3(-(sx - 0.5) * aspect * 0.32 - lookX * 1.4, 0.46 + lookY * 1.6, -1.0));
     vec3 sun = normalize(vec3(sin(t * 0.07) * 0.55 + 0.18, 0.2, -0.86));
     vec3 fill = normalize(vec3(-0.72, 0.34, -0.28));
 
@@ -217,7 +216,7 @@ void main() {
     col += vec3(0.62, 0.78, 0.4) * foam;
     col += BRAND * caustic * 0.16;
 
-    float moonX = 0.62 + sin(t * 0.07) * 0.035;
+    float moonX = 0.62 + sin(t * 0.07) * 0.035 - lookX * 1.15;
     float refl = exp(-abs(sx - moonX) * aspect * 6.5);
     refl *= 0.28 + 0.72 * spec;
     refl *= exp(-z * 0.018);
