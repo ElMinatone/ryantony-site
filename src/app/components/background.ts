@@ -1,16 +1,20 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { AsciiOceanComponent } from './ascii-ocean';
 
 @Component({
   selector: 'app-background',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [AsciiOceanComponent],
   template: `
     <div class="bg" aria-hidden="true">
+      <app-ascii-ocean />
       <div class="bg-grid"></div>
       <div class="bg-pixels"></div>
       <div class="glow glow--a"></div>
       <div class="glow glow--b"></div>
       <div class="glow glow--c"></div>
       <div class="scanline"></div>
+      <div class="ocean-scrim"></div>
       <div class="vignette"></div>
     </div>
   `,
@@ -99,12 +103,46 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
       opacity: 0.6;
     }
 
+    .ocean-scrim {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      background: linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.5) 0%,
+        rgba(0, 0, 0, 0.14) 16%,
+        rgba(0, 0, 0, 0.18) 70%,
+        rgba(0, 0, 0, 0.58) 100%
+      );
+    }
+
     .vignette {
       position: absolute;
       inset: 0;
       background:
         radial-gradient(ellipse 85% 55% at 50% -5%, transparent 40%, rgba(0, 0, 0, 0.55) 100%),
         linear-gradient(to bottom, transparent 60%, rgba(0, 0, 0, 0.7) 100%);
+    }
+
+    :host-context(.has-ascii-ocean) .bg-grid,
+    :host-context(.has-ascii-ocean) .bg-pixels {
+      opacity: 0.08;
+    }
+
+    :host-context(.has-ascii-ocean) .glow {
+      opacity: 0.22;
+    }
+
+    :host-context(.has-ascii-ocean) .scanline {
+      opacity: 0.18;
+    }
+
+    :host-context(.has-ascii-ocean) .ocean-scrim {
+      opacity: 1;
+    }
+
+    :host-context(.has-ascii-ocean) .vignette {
+      opacity: 0.45;
     }
 
     @media (max-width: 720px) {
