@@ -107,12 +107,35 @@ import { AsciiOceanComponent } from './ascii-ocean';
       position: absolute;
       inset: 0;
       opacity: 0;
-      background: linear-gradient(
-        180deg,
-        rgba(0, 0, 0, 0.5) 0%,
-        rgba(0, 0, 0, 0.14) 16%,
-        rgba(0, 0, 0, 0.18) 70%,
-        rgba(0, 0, 0, 0.58) 100%
+      background:
+        linear-gradient(
+          90deg,
+          transparent 0%,
+          rgba(0, 0, 0, 0.48) 9%,
+          rgba(0, 0, 0, 0.56) 50%,
+          rgba(0, 0, 0, 0.48) 91%,
+          transparent 100%
+        ),
+        linear-gradient(
+          180deg,
+          rgba(0, 0, 0, 0.35) 0%,
+          rgba(0, 0, 0, 0.08) 16%,
+          rgba(0, 0, 0, 0.16) 70%,
+          rgba(0, 0, 0, 0.55) 100%
+        );
+      mask-image: linear-gradient(
+        to bottom,
+        transparent 0%,
+        transparent 18%,
+        rgba(0, 0, 0, 0.7) 30%,
+        #000 42%
+      );
+      -webkit-mask-image: linear-gradient(
+        to bottom,
+        transparent 0%,
+        transparent 18%,
+        rgba(0, 0, 0, 0.7) 30%,
+        #000 42%
       );
     }
 

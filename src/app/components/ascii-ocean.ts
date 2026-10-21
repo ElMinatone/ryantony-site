@@ -9,7 +9,7 @@ import {
   viewChild,
 } from '@angular/core';
 
-const DESKTOP_QUERY = '(min-width: 1100px) and (hover: hover) and (pointer: fine)';
+const DESKTOP_QUERY = '(min-width: 1100px)';
 
 const GLYPHS = [
   ' ', '.', ',', '`', ':', ';', '-', '~',
@@ -70,6 +70,8 @@ void accumulate(inout vec3 N, inout float h, inout float steep, vec4 w) {
 float glyphIndex(float light, float spec, float foam, float caustic, vec3 N, float sky, float skyLum, float star) {
   if (sky > 0.5) {
     if (star > 0.5) return 49.0;
+    if (skyLum > 0.92) return 26.0;
+    if (skyLum > 0.76) return 30.0;
     return 48.0 + floor(clamp(skyLum, 0.0, 0.999) * 8.0);
   }
   if (spec > 0.4) return 40.0 + floor(clamp(spec, 0.0, 0.999) * 8.0);
@@ -91,10 +93,27 @@ void main() {
   float aspect = uResolution.x / uResolution.y;
   float t = uTime * 0.68;
 
+  float cycle = mod(uTime, 75.0) / 75.0;
+  float sunAngle = cycle * TAU;
+  float sunH = sin(sunAngle);
+  float sunX = 0.5 - cos(sunAngle) * 0.36;
+  float daylight = smoothstep(-0.07, 0.2, sunH);
+  float golden = exp(-abs(sunH) * 6.0);
+  float dusk = smoothstep(0.3, 0.47, cycle) * (1.0 - smoothstep(0.53, 0.7, cycle));
+  vec3 sunColor = mix(
+    vec3(1.0, 0.82, 0.54),
+    mix(vec3(1.0, 0.53, 0.18), vec3(1.0, 0.23, 0.06), dusk),
+    golden
+  );
+  float sunUp = smoothstep(-0.025, 0.06, sunH);
+  float moonH = -sunH;
+  float moonX = 0.5 + cos(sunAngle) * 0.4;
+  float moonUp = smoothstep(-0.025, 0.06, moonH);
+
   vec2 ptr = clamp(uPointer, vec2(0.0), vec2(1.0));
   float lookX = (ptr.x - 0.5) * 0.34;
   float lookY = (ptr.y - 0.5) * 0.05;
-  float horizon = 0.78 + sin(t * 0.31) * 0.006 - lookY;
+  float horizon = 0.72 + sin(t * 0.31) * 0.006 - lookY;
 
   float sy0 = frag.y / uResolution.y;
   float sx0 = frag.x / uResolution.x;
@@ -119,31 +138,51 @@ void main() {
 
   if (sky > 0.5) {
     float skyT = clamp((sy - horizon) / max(1.0 - horizon, 0.001), 0.0, 1.0);
-    vec3 zenith = vec3(0.004, 0.006, 0.004);
-    vec3 dusk = vec3(0.045, 0.07, 0.02);
-    col = mix(dusk, zenith, smoothstep(0.0, 0.72, skyT));
+    vec3 nightZenith = vec3(0.003, 0.005, 0.004);
+    vec3 dayZenith = vec3(0.018, 0.065, 0.08);
+    vec3 nightHorizon = vec3(0.045, 0.07, 0.02);
+    vec3 dayHorizon = vec3(0.17, 0.29, 0.2);
+    vec3 zenith = mix(nightZenith, dayZenith, daylight);
+    vec3 horizonCol = mix(nightHorizon, dayHorizon, daylight);
+    horizonCol = mix(horizonCol, sunColor, golden * 0.68);
+    col = mix(horizonCol, zenith, smoothstep(0.0, 0.72, skyT));
+    col += sunColor * exp(-skyT * 3.0) * golden * 0.16;
 
-    float moonX = 0.62 + sin(t * 0.07) * 0.035 - lookX * 1.15;
-    float moonY = horizon + 0.055;
-    vec2 moon = vec2(moonX, moonY);
-    float md = length((vec2(sx, sy) - moon) * vec2(aspect, 1.0));
-    float disk = smoothstep(0.045, 0.012, md);
-    float halo = exp(-md * 16.0);
-    col += BRAND * halo * 0.55;
-    col += vec3(0.9, 1.0, 0.78) * disk;
+    float sunScreenX = sunX - lookX * 1.15;
+    float sunY = horizon + sunH * 0.11;
+    vec2 sunPos = vec2(sunScreenX, sunY);
+    float sd = length((vec2(sx, sy) - sunPos) * vec2(aspect, 1.0));
+    float sunDisk = smoothstep(0.065, 0.018, sd) * sunUp;
+    float sunHalo = exp(-sd * 11.0) * sunUp;
+    col += sunColor * sunHalo * 1.1;
+    col += sunColor * exp(-sd * 4.5) * 0.16 * sunUp;
+    col += vec3(1.0, 0.94, 0.78) * sunDisk * 2.6;
+    col += sunColor * exp(-skyT * 3.5) * golden * 0.12;
 
-    float ray = pow(max(0.0, 1.0 - abs(sx - moonX) * 2.8), 5.0) * exp(-skyT * 2.4);
-    float shaft = 0.65 + 0.35 * sin(sx * 90.0 + t * 0.4);
-    col += BRAND * ray * shaft * 0.22;
+    float ray = pow(max(0.0, 1.0 - abs(sx - sunScreenX) * 2.4), 5.0) * exp(-skyT * 2.4) * sunUp;
+    float shaft = 0.6 + 0.4 * sin(sx * 85.0 + t * 0.5);
+    col += sunColor * ray * shaft * (0.16 + golden * 0.3);
+
+    float moonScreenX = moonX - lookX * 1.15;
+    float moonY = horizon + moonH * 0.11;
+    vec2 moonPos = vec2(moonScreenX, moonY);
+    float md = length((vec2(sx, sy) - moonPos) * vec2(aspect, 1.0));
+    float moonDisk = smoothstep(0.045, 0.012, md) * moonUp;
+    float moonHalo = exp(-md * 16.0) * moonUp;
+    col += BRAND * moonHalo * 0.42;
+    col += vec3(0.9, 1.0, 0.78) * moonDisk;
+
+    float moonRay = pow(max(0.0, 1.0 - abs(sx - moonScreenX) * 2.8), 5.0) * exp(-skyT * 2.4) * moonUp;
+    col += BRAND * moonRay * shaft * 0.18;
 
     float skySx = sx + lookX * 1.15;
     float cloud = sin(skySx * 7.5 + t * 0.08) * sin(skySx * 2.4 - 1.7);
     cloud = smoothstep(0.15, 0.85, cloud) * exp(-skyT * 7.0);
-    col += vec3(0.03, 0.045, 0.015) * cloud;
+    col += mix(vec3(0.03, 0.045, 0.015), sunColor * 0.16, golden * 0.6) * cloud;
 
     skyLum = clamp(dot(col, vec3(0.3, 0.5, 0.2)) * 2.4, 0.0, 1.0);
     vec2 skyQ = q + vec2(lookX * uResolution.x, -lookY * uResolution.y);
-    star = step(0.9982, hash(floor(skyQ / cell)));
+    star = step(0.9982, hash(floor(skyQ / cell))) * (1.0 - daylight);
     if (star > 0.5 && skyT > 0.18) {
       col += vec3(0.55, 0.62, 0.4);
       skyLum = max(skyLum, 0.35);
@@ -184,16 +223,28 @@ void main() {
     N = normalize(N);
 
     vec3 V = normalize(vec3(-(sx - 0.5) * aspect * 0.32 - lookX * 1.4, 0.46 + lookY * 1.6, -1.0));
-    vec3 sun = normalize(vec3(sin(t * 0.07) * 0.55 + 0.18, 0.2, -0.86));
+    float sunScreenX = sunX - lookX * 1.15;
+    float moonScreenX = moonX - lookX * 1.15;
+    vec3 sunDir = normalize(vec3((sunScreenX - 0.5) * 1.8, max(sunH, 0.04) * 1.5 + 0.06, -1.0));
+    vec3 moonDir = normalize(vec3((moonScreenX - 0.5) * 1.8, max(moonH, 0.04) * 1.5 + 0.06, -1.0));
     vec3 fill = normalize(vec3(-0.72, 0.34, -0.28));
 
-    float ndl = clamp(dot(N, sun), 0.0, 1.0);
-    float wrap = clamp(dot(N, sun) * 0.45 + 0.55, 0.0, 1.0);
-    float fillL = clamp(dot(N, fill), 0.0, 1.0) * 0.28;
-    spec = pow(clamp(dot(reflect(-sun, N), V), 0.0, 1.0), mix(36.0, 96.0, near));
+    float ndlSun = clamp(dot(N, sunDir), 0.0, 1.0) * sunUp;
+    float ndlMoon = clamp(dot(N, moonDir), 0.0, 1.0) * moonUp * 0.38;
+    float ndl = ndlSun + ndlMoon;
+    float wrap = clamp(dot(N, sunDir) * 0.45 + 0.55, 0.0, 1.0) * sunUp;
+    wrap += clamp(dot(N, moonDir) * 0.45 + 0.55, 0.0, 1.0) * moonUp * 0.5;
+    wrap = max(wrap, 0.3);
+    float fillL = clamp(dot(N, fill), 0.0, 1.0) * 0.24;
+    float specSun = pow(clamp(dot(reflect(-sunDir, N), V), 0.0, 1.0), mix(36.0, 96.0, near)) * sunUp;
+    float specMoon = pow(clamp(dot(reflect(-moonDir, N), V), 0.0, 1.0), mix(32.0, 80.0, near)) * moonUp;
+    spec = max(specSun, specMoon);
     float spec2 = pow(clamp(dot(reflect(-fill, N), V), 0.0, 1.0), 18.0) * 0.22;
     float fres = pow(1.0 - clamp(dot(N, V), 0.0, 1.0), 4.0);
-    float sss = pow(clamp(dot(-sun, V), 0.0, 1.0), 2.6) * smoothstep(-0.02, 0.2, h);
+    float sss = (
+      pow(clamp(dot(-sunDir, V), 0.0, 1.0), 2.6) * sunUp +
+      pow(clamp(dot(-moonDir, V), 0.0, 1.0), 2.6) * moonUp
+    ) * smoothstep(-0.02, 0.2, h);
 
     float crest = smoothstep(0.08, 0.24, h) * smoothstep(0.42, 1.05, steep);
     float breakup = 0.55 + 0.45 * sin(xz.x * 3.4 + xz.y * 2.2 + t * 0.8);
@@ -203,35 +254,49 @@ void main() {
     float c2 = sin(xz.y * 2.4 - t * 0.95 + h * 5.0);
     caustic = pow(abs(c1 * c2), 1.6) * near * (1.0 - smoothstep(0.05, 0.22, h));
 
-    vec3 deep = vec3(0.008, 0.012, 0.007);
-    vec3 body = vec3(0.035, 0.07, 0.02);
-    vec3 lit = vec3(0.16, 0.3, 0.07);
+    vec3 deep = mix(vec3(0.008, 0.012, 0.007), vec3(0.012, 0.035, 0.045), daylight);
+    vec3 body = mix(vec3(0.035, 0.07, 0.02), vec3(0.07, 0.16, 0.18), daylight);
+    vec3 lit = mix(vec3(0.16, 0.3, 0.07), vec3(0.3, 0.5, 0.45), daylight);
+    body = mix(body, vec3(0.16, 0.075, 0.02), golden * 0.35);
+    lit = mix(lit, sunColor * 0.55, golden * 0.45);
     col = mix(deep, body, wrap);
     col = mix(col, lit, ndl * 0.9 + fillL);
-    col += BRAND * spec * 1.25;
+    col += sunColor * specSun * 1.35;
+    col += BRAND * specMoon * 0.95;
     col += vec3(0.9, 1.0, 0.75) * pow(spec, 2.2);
     col += vec3(0.12, 0.24, 0.07) * spec2;
     col += vec3(0.18, 0.34, 0.08) * sss * 0.7;
     col += vec3(0.1, 0.16, 0.05) * fres * (1.0 - near * 0.7);
-    col += vec3(0.62, 0.78, 0.4) * foam;
+    col += mix(vec3(0.62, 0.78, 0.4), vec3(0.95, 0.85, 0.66), golden * 0.4) * foam;
     col += BRAND * caustic * 0.16;
 
-    float moonX = 0.62 + sin(t * 0.07) * 0.035 - lookX * 1.15;
-    float refl = exp(-abs(sx - moonX) * aspect * 6.5);
-    refl *= 0.28 + 0.72 * spec;
-    refl *= exp(-z * 0.018);
-    col += BRAND * refl * 0.85;
-    col += vec3(0.85, 1.0, 0.7) * refl * spec;
+    float sunRefl = exp(-abs(sx - sunScreenX) * aspect * 4.2);
+    sunRefl *= sunUp * (0.35 + 0.65 * specSun) * exp(-z * 0.018);
+    col += sunColor * sunRefl * 1.8;
+
+    float moonRefl = exp(-abs(sx - moonScreenX) * aspect * 4.6);
+    moonRefl *= moonUp * (0.25 + 0.75 * specMoon) * exp(-z * 0.018);
+    col += BRAND * moonRefl * 1.1;
+
+    col += vec3(0.02, 0.05, 0.06) * daylight;
 
     float fog = exp(-z * 0.034);
-    vec3 air = vec3(0.055, 0.082, 0.028);
+    vec3 air = mix(vec3(0.055, 0.082, 0.028), vec3(0.09, 0.14, 0.11), daylight);
+    air = mix(air, sunColor * 0.22, golden * 0.42);
     col = mix(air, col, fog);
     float hz = exp(-abs(sy - horizon) * 70.0);
-    col += BRAND * hz * 0.28;
+    float horizonLine = exp(-abs(sy - horizon) * 190.0);
+    col += mix(BRAND, sunColor, golden * 0.7) * hz * (0.24 + 0.16 * daylight);
+    col += mix(BRAND, sunColor, golden * 0.8) * horizonLine * 0.42;
 
-    light = clamp(wrap * 0.42 + ndl * 0.7 + fillL + spec * 1.35 + foam * 0.85 + fres * 0.2, 0.0, 1.35);
+    light = clamp(
+      wrap * 0.42 + ndl * 0.7 + fillL + specSun * 1.35 + specMoon * 0.9 + foam * 0.85 + fres * 0.2,
+      0.0,
+      1.35
+    );
     light *= mix(0.55, 1.0, fog);
-    light += refl * 0.45;
+    light += sunRefl * 0.9 + moonRefl * 0.4;
+    light = max(light, daylight * 0.1);
   }
 
   float dither = hash(floor(q / cell)) - 0.5;
@@ -312,7 +377,8 @@ export class AsciiOceanComponent implements OnDestroy {
   private cell = 12;
   private quality = 1;
   private slowFrames = 0;
-  private time = 8.4;
+  private time = 2.8;
+  private readonly staticTime = 37.0;
   private voyage = 0;
   private lastScroll = 0;
   private wake = 0;
@@ -346,6 +412,9 @@ export class AsciiOceanComponent implements OnDestroy {
     this.desktopQuery = window.matchMedia(DESKTOP_QUERY);
     this.reducedQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
     this.reduced = this.reducedQuery.matches;
+    if (this.reduced) {
+      this.time = this.staticTime;
+    }
     this.desktopQuery.addEventListener('change', this.onDesktopChange);
     this.reducedQuery.addEventListener('change', this.onReducedChange);
     this.sync();
@@ -356,7 +425,7 @@ export class AsciiOceanComponent implements OnDestroy {
   private readonly onReducedChange = (): void => {
     this.reduced = this.reducedQuery?.matches ?? false;
     if (this.reduced) {
-      this.time = 14.2;
+      this.time = this.staticTime;
       this.draw(this.time);
     }
   };
@@ -381,7 +450,6 @@ export class AsciiOceanComponent implements OnDestroy {
       depth: false,
       stencil: false,
       powerPreference: 'high-performance',
-      failIfMajorPerformanceCaveat: true,
     });
 
     if (!gl) {
@@ -529,7 +597,7 @@ export class AsciiOceanComponent implements OnDestroy {
     const wakeTarget = this.inside ? 1 : 0;
     this.wake += (wakeTarget - this.wake) * 0.04;
 
-    this.draw(this.reduced ? 14.2 : this.time);
+    this.draw(this.time);
     this.raf = requestAnimationFrame(this.frame);
   };
 
@@ -560,7 +628,7 @@ export class AsciiOceanComponent implements OnDestroy {
     }
 
     this.gl?.viewport(0, 0, w, h);
-    this.draw(this.reduced ? 14.2 : this.time);
+    this.draw(this.time);
   }
 
   private draw(time: number): void {
